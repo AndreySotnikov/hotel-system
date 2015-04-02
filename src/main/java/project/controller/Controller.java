@@ -89,11 +89,7 @@ public class Controller {
         Users user = new Users(username,encryptPassword.encrypt(password),1);
         usersService.add(user);
         users_rolesService.add(new User_roles("ROLE_USER",user));
-//
-//        loginDatabase.connect();
-//       password = encryptPassword.encrypt(password);
-//        loginDatabase.insertData(username,password);
-//        loginDatabase.closeDB();
+
         return "home";
     }
 }

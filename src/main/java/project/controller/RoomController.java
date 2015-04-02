@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import project.dto.RoomDto;
@@ -40,10 +41,25 @@ public class RoomController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addForm(ModelMap modelMap) {
-        modelMap.addAttribute("roomTypeList",roomTypeService.getAll());
+        modelMap.addAttribute("roomTypeList",roomTypeService.getAll(tenantId));
         modelMap.addAttribute("tenantId", tenantId);
         return "room/add";
     }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String updateForm(@PathVariable("id") int id, ModelMap modelMap) {
+        modelMap.addAttribute("room",roomService.getOne(id));
+        modelMap.addAttribute("roomTypeList",roomTypeService.getAll(tenantId));
+        modelMap.addAttribute("tenantId", tenantId);
+        return "room/add";
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(@PathVariable("id") int id, @ModelAttribute("room") RoomDto room, ModelMap modelMap){
+        roomService.update(room,id);
+        return "redirect:/room/all";
+    }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute("room") RoomDto room){

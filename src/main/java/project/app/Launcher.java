@@ -30,8 +30,9 @@ public class Launcher {
 
         RoomState roomState = new RoomState("занято",1);
         roomStateRepository.save(roomState);
-        RoomType roomType = new RoomType(1,"Шлюкс");
+        RoomType roomType = new RoomType(1,"Люкс");
         roomTypeRepository.save(roomType);
+        roomTypeRepository.save(new RoomType(1,"Эконом"));
         Room room = new Room(5,30,roomType,1);
         roomRepository.save(room);
         TimeTable timeTable = new TimeTable(room,roomState,5L,10L,1);

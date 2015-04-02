@@ -21,7 +21,7 @@ public class TimeTableService {
         return ttRep.findOne(id);
     }
 
-    public List<TimeTable> getAll(){
+    public List<TimeTable> getAll(int tenantId){
         List<TimeTable> timeTables = new ArrayList<TimeTable>();
         for (TimeTable timeTable : ttRep.findAll())
             timeTables.add(timeTable);

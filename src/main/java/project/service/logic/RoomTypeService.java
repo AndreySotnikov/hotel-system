@@ -22,9 +22,9 @@ public class RoomTypeService {
         return rTRep.findOne(id);
     }
 
-    public List<RoomType> getAll(){
+    public List<RoomType> getAll(int tenantId){
         List<RoomType> roomTypes = new ArrayList<RoomType>();
-        for (RoomType roomType : rTRep.findAll())
+        for (RoomType roomType : rTRep.findAll(tenantId))
             roomTypes.add(roomType);
         return roomTypes;
     }

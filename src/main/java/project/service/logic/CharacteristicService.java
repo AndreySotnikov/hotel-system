@@ -20,12 +20,13 @@ public class CharacteristicService {
         return cRep.findOne(id);
     }
 
-    public List<Characteristic> getAll(){
+    public List<Characteristic> getAll(int tenantId){
         List<Characteristic> characteristics = new ArrayList<Characteristic>();
-        for (Characteristic characteristic : cRep.findAll())
+        for (Characteristic characteristic : cRep.findAll(tenantId))
             characteristics.add(characteristic);
         return characteristics;
     }
+
 
     public Characteristic add(Characteristic characteristic){
         return cRep.save(characteristic);

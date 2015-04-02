@@ -54,4 +54,12 @@ public class RoomService {
         updRoom.setRoomType(room.getRoomType());
         return rRep.save(updRoom);
     }
+
+    public Room update(RoomDto room, Integer id){
+        Room updRoom = rRep.findOne(id);
+        updRoom.setFloor(room.getFloor());
+        updRoom.setNumber(room.getNumber());
+        updRoom.setRoomType(roomTypeRepository.findOne(room.getRoomType()));
+        return rRep.save(updRoom);
+    }
 }
