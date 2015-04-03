@@ -34,7 +34,11 @@
             <!-- dialog body -->
             <div class="modal-body">
                 <button id="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
-                <b>Добавить номер</b>
+                <#if room?? && room.roomId??>
+                    <b>Редактировать номер</b>
+                <#else>
+                    <b>Добавить номер</b>
+                </#if>
             </div>
             <!-- dialog buttons -->
             <form method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>" name="room">
@@ -85,7 +89,7 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    $("#selectType").val(<#if room??>"${room.roomType.roomTypeId}"<#else>"1"</#if>);
+    $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>);
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {

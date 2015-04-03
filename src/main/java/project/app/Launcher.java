@@ -22,6 +22,8 @@ public class Launcher {
         ApplicationContext context = SpringApplication.run(MainConfig.class,args);
         User_rolesRepository ur = context.getBean(User_rolesRepository.class);
         UsersRepository u = context.getBean(UsersRepository.class);
+        AttributeRepository ar = context.getBean(AttributeRepository.class);
+        CharacteristicRepository cr = context.getBean(CharacteristicRepository.class);
 
         RoomRepository roomRepository = context.getBean(RoomRepository.class);
         RoomTypeRepository roomTypeRepository = context.getBean(RoomTypeRepository.class);
@@ -38,6 +40,12 @@ public class Launcher {
         TimeTable timeTable = new TimeTable(room,roomState,5L,10L,1);
         timeTableRepository.save(timeTable);
 
+
+        Characteristic cr1 = new Characteristic("wi-fi",1);
+        Characteristic cr2 = new Characteristic("price",1);
+
+        cr.save(cr1);
+        cr.save(cr2);
 
 
         Users user = new Users("22",encryptPassword.encrypt("22"),1);
