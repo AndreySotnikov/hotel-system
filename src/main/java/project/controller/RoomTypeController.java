@@ -7,6 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import project.entity.Attribute;
+import project.entity.Characteristic;
+import project.entity.RoomType;
 import project.repository.RoomTypeRepository;
 import project.repository.UsersRepository;
 import project.service.logic.AttributeService;
@@ -56,8 +59,23 @@ public class RoomTypeController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(@RequestParam("chars") String chars,
                       @RequestParam("values") String values){
+        String[] charList = chars.split(",");
+        String[] valueList = values.split(",");
+        RoomType roomType = new RoomType(Integer.parseInt(valueList[valueList.length-1]),valueList[0]);
+        roomType = roomTypeRepository.save(roomType);
+        for (int i=0;i<charList.length;i++){
+            int id = characteristicService.getIdByName(charList[i],tenantId);
+            Attribute a = new Attribute(roomType.getRoomTypeId(),id,valueList[i+1],Integer.parseInt(valueList[valueList.length-1]));
+            attributeService.add(a);
+        }
         System.err.println(chars);
         System.err.println(values);
         return "redirect:/room-type/all";
+    }
+
+    @RequestMapping(value = "addChar", method = RequestMethod.POST)
+    public void addCharForm(@RequestParam("data") String data ){
+        characteristicService.add(new Characteristic(data,tenantId));
+
     }
 }

@@ -43,9 +43,13 @@ public class Launcher {
 
         Characteristic cr1 = new Characteristic("wi-fi",1);
         Characteristic cr2 = new Characteristic("price",1);
+        Characteristic cr3 = new Characteristic("beds",1);
+        Characteristic cr4 = new Characteristic("guests",1);
 
         cr.save(cr1);
         cr.save(cr2);
+        cr.save(cr3);
+        cr.save(cr4);
 
 
         Users user = new Users("22",encryptPassword.encrypt("22"),1);

@@ -41,4 +41,8 @@ public class CharacteristicService {
         updChar.setName(characteristic.getName());
         return cRep.save(updChar);
     }
+
+    public int getIdByName(String name, int tenantId){
+        return cRep.getIdByName(tenantId,name);
+    }
 }

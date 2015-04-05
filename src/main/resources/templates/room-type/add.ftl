@@ -69,7 +69,7 @@
                         <div class="col-xs-4">
                             <select id="selectCharacteristic" class="form-control" name="characteristic">
                             <#list characteristicList as characteristic>
-                                <option value="${characteristic.characteristicId}">${characteristic.name}</option>
+                                <option value="${characteristic.name}">${characteristic.name}</option>
                             </#list>
                                 <option value="0">Добавить характеристику</option>
                             </select>
@@ -104,6 +104,39 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+    $("select[name=characteristic]").change(function () {
+        var str = "";
+        $("select option:selected").each(function () {
+            str += $(this).text();
+        });
+
+        if (str == 'Добавить характеристику') {
+            $("form").after(
+                    '<div id="mod-form" class="modal-footer">' +
+                    '<div class="col-xs-7">' +
+                    '<input id="addchar" type="text" class="form-control" name="val">' +
+                    '</div>' +
+                    '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику">' +
+                    '</div>'
+            );
+
+            $("#modal-form-submit").click(function () {
+                var input = document.getElementById("addchar");
+                $("#selectCharacteristic option[value='0']").remove();
+                $('#selectCharacteristic').append($('<option>', {
+                    value: input.value,
+                    text: input.value
+                }));
+                $('#selectCharacteristic').append($('<option>', {
+                    value: "0",
+                    text: "Добавить характеристику"
+                }));
+                $.post("/room-type/addChar", {data: input.value.toString()});
+                $("#mod-form").remove();
+            });
+        }
+    });
 
     $("#sub").click(function () {
         //alert('hello');
@@ -140,7 +173,7 @@
             '<div class="col-xs-4">'+
                 '<select id="selectCharacteristic" class="form-control" name="characteristic">'+
                 '<#list characteristicList as characteristic>'+
-                    '<option value="${characteristic.characteristicId}">${characteristic.name}</option>'+
+                    '<option value="${characteristic.name}">${characteristic.name}</option>'+
                 '</#list>'+
                     '<option value="0">Добавить характеристику</option>'+
                 '</select>'+
@@ -177,4 +210,4 @@
     });
 </script>
 
-<#include "/part/footer.ftl">
+<#--<#include "/part/footer.ftl">-->
