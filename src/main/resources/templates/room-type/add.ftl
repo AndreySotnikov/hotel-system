@@ -107,38 +107,38 @@
 
     var i = 0;
 
-    $("select").change(function () {
-        var str = "";
-        $("select option:selected").each(function () {
-            str = $(this).text();
-        });
-
-        if (str == 'Добавить характеристику') {
-            $("form").after(
-                    '<div id="mod-form" class="modal-footer">' +
-                    '<div class="col-xs-7">' +
-                    '<input id="addchar" type="text" class="form-control" name="val">' +
-                    '</div>' +
-                    '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику">' +
-                    '</div>'
-            );
-
-            $("#modal-form-submit").click(function () {
-                var input = document.getElementById("addchar");
-                $("#selectCharacteristic option[value='0']").remove();
-                $('#selectCharacteristic').append($('<option>', {
-                    value: input.value,
-                    text: input.value
-                }));
-                $('#selectCharacteristic').append($('<option>', {
-                    value: "0",
-                    text: "Добавить характеристику"
-                }));
-                $.post("/room-type/addChar", {data: input.value.toString()});
-                $("#mod-form").remove();
-            });
-        }
-    });
+//    $("select").change(function () {
+//        var str = "";
+//        $("select option:selected").each(function () {
+//            str = $(this).text();
+//        });
+//
+//        if (str == 'Добавить характеристику') {
+//            $("form").after(
+//                    '<div id="mod-form" class="modal-footer">' +
+//                    '<div class="col-xs-7">' +
+//                    '<input id="addchar" type="text" class="form-control" name="val">' +
+//                    '</div>' +
+//                    '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику">' +
+//                    '</div>'
+//            );
+//
+//            $("#modal-form-submit").click(function () {
+//                var input = document.getElementById("addchar");
+//                $("#selectCharacteristic option[value='0']").remove();
+//                $('#selectCharacteristic').append($('<option>', {
+//                    value: input.value,
+//                    text: input.value
+//                }));
+//                $('#selectCharacteristic').append($('<option>', {
+//                    value: "0",
+//                    text: "Добавить характеристику"
+//                }));
+//                $.post("/room-type/addChar", {data: input.value.toString()});
+//                $("#mod-form").remove();
+//            });
+//        }
+//    });
 
     $("#sub").click(function () {
         //alert('hello');
@@ -188,17 +188,17 @@
 
         $(document).on('change', 'select[name=characteristic' + i + ']', function () {
             var inputs = document.getElementsByTagName('select');
-            for (var i = 0; i < inputs.length; ++i) {
-                var e = inputs[i];
-                if (e.options[e.selectedIndex].text.contains('Добавить характеристику'))
+            for (var k = 0; k < inputs.length; ++k) {
+                var e = inputs[k];
+                if (e.options[e.selectedIndex].text=='Добавить характеристику')
                     break;
             }
-            var j = i;
+            var j = k;
             //alert('j:'+j+' inputs.length '+ inputs.length);
             if (j < inputs.length) {
                 j++;
                 var e = document.getElementById('selectCharacteristic' + j);
-                if (e.options[e.selectedIndex].text.contains('Добавить характеристику')) {
+                if (e.options[e.selectedIndex].text=='Добавить характеристику') {
                     $("form").after(
                             '<div id="mod-form" class="modal-footer">' +
                             '<div class="col-xs-7">' +

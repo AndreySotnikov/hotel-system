@@ -23,6 +23,14 @@ public class Attribute {
         this.tenantId = tenantId;
     }
 
+    public int getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
+    }
+
     public TypeChar getTypeCharId() {
         return typeCharId;
     }
