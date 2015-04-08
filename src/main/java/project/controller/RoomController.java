@@ -74,4 +74,10 @@ public class RoomController {
         modelMap.addAttribute("roomList",roomService.getAll(tenantId));
         return "room/all";
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id){
+        roomService.delete(id);
+        return "redirect:/room/all";
+    }
 }

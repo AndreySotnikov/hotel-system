@@ -7,7 +7,6 @@ import java.sql.Date;
  * Created by andrey on 01.04.15.
  */
 @Entity
-@Table(name = "gav")
 public class TimeTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

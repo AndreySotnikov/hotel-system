@@ -30,6 +30,7 @@ public class Launcher {
         TimeTableRepository timeTableRepository = context.getBean(TimeTableRepository.class);
         RoomStateRepository roomStateRepository = context.getBean(RoomStateRepository.class);
 
+
         RoomState roomState = new RoomState("занято",1);
         roomStateRepository.save(roomState);
         RoomType roomType = new RoomType(1,"Люкс");
@@ -38,7 +39,7 @@ public class Launcher {
         Room room = new Room(5,30,roomType,1);
         roomRepository.save(room);
         TimeTable timeTable = new TimeTable(room,roomState,5L,10L,1);
-        timeTableRepository.save(timeTable);
+        //timeTableRepository.save(timeTable);
 
 
         Characteristic cr1 = new Characteristic("wi-fi",1);
@@ -46,11 +47,16 @@ public class Launcher {
         Characteristic cr3 = new Characteristic("beds",1);
         Characteristic cr4 = new Characteristic("guests",1);
 
+        Attribute at1 = new Attribute(1,1,"yes",1);
+        Attribute at2 = new Attribute(1,2,"300",1);
+
         cr.save(cr1);
         cr.save(cr2);
         cr.save(cr3);
         cr.save(cr4);
 
+        ar.save(at1);
+        ar.save(at2);
 
         Users user = new Users("22",encryptPassword.encrypt("22"),1);
         u.save(user);
