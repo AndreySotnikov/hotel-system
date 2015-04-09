@@ -29,10 +29,11 @@ public class RoomService {
     }
 
     public List<Room> getAll(int tenantId){
-        List<Room> rooms = new ArrayList<Room>();
-        for (Room room : rRep.findAll(tenantId))
-            rooms.add(room);
-        return rooms;
+        return rRep.findAll(tenantId);
+    }
+
+    public List<Room> getSortedAll(int tenantId){
+        return rRep.findSortedAll(tenantId);
     }
 
     @Transactional

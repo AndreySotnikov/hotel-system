@@ -13,4 +13,7 @@ import java.util.List;
 public interface RoomRepository extends CrudRepository<Room,Integer> {
     @Query("select r from Room r where r.tenantId=:tenantId")
     public List<Room> findAll(@Param("tenantId")int tenantId);
+
+    @Query("select r from Room r where r.tenantId=:tenantId order by r.roomType.roomTypeId")
+    public List<Room> findSortedAll(@Param("tenantId")int tenantId);
 }

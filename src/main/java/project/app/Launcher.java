@@ -10,6 +10,8 @@ import project.service.login.EncryptPassword;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by andrey on 23.03.15.
@@ -31,15 +33,50 @@ public class Launcher {
         RoomStateRepository roomStateRepository = context.getBean(RoomStateRepository.class);
 
 
-        RoomState roomState = new RoomState("занято",1);
-        roomStateRepository.save(roomState);
+        RoomState roomState1 = new RoomState("Занято",1);
+        RoomState roomState3 = new RoomState("Оплачено",1);
+        RoomState roomState4 = new RoomState("Бронь",1);
+
+        roomStateRepository.save(roomState1);
+        roomStateRepository.save(roomState3);
+        roomStateRepository.save(roomState4);
+
         RoomType roomType = new RoomType(1,"Люкс");
+        RoomType roomType1 = new RoomType(1,"Эконом");
         roomTypeRepository.save(roomType);
-        roomTypeRepository.save(new RoomType(1,"Эконом"));
+        roomTypeRepository.save(roomType1);
         Room room = new Room(5,30,roomType,1);
+
         roomRepository.save(room);
-        TimeTable timeTable = new TimeTable(room,roomState,5L,10L,1);
-        //timeTableRepository.save(timeTable);
+        Room room1 = new Room(1,10,roomType1,1);
+        Room room2 = new Room(1,5,roomType1,1);
+        Room room3 = new Room(3,8,roomType,1);
+        Room room4 = new Room(2,4,roomType,1);
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+        roomRepository.save(room3);
+        roomRepository.save(room4);
+        TimeTable timeTable1 = new TimeTable(room,roomState1,new GregorianCalendar(2015,3,8).getTimeInMillis(),new GregorianCalendar(2015,3,22).getTimeInMillis(),1);
+        //TimeTable timeTable2 = new TimeTable(room,roomState1,new GregorianCalendar(2015,3,5).getTimeInMillis(),new GregorianCalendar(2015,3,10).getTimeInMillis(),1);
+        TimeTable timeTable3 = new TimeTable(room1,roomState1,new GregorianCalendar(2015,3,5).getTimeInMillis(),new GregorianCalendar(2015,3,9).getTimeInMillis(),1);
+        //TimeTable timeTable4 = new TimeTable(room1,roomState3,new GregorianCalendar(2015,3,8).getTimeInMillis(),new GregorianCalendar(2015,3,18).getTimeInMillis(),1);
+        TimeTable timeTable5 = new TimeTable(room2,roomState3,new GregorianCalendar(2015,3,23).getTimeInMillis(),new GregorianCalendar(2015,3,25).getTimeInMillis(),1);
+        //TimeTable timeTable6 = new TimeTable(room2,roomState3,new GregorianCalendar(2015,3,16).getTimeInMillis(),new GregorianCalendar(2015,3,28).getTimeInMillis(),1);
+        TimeTable timeTable7 = new TimeTable(room3,roomState4,new GregorianCalendar(2015,3,15).getTimeInMillis(),new GregorianCalendar(2015,3,22).getTimeInMillis(),1);
+        //TimeTable timeTable8 = new TimeTable(room3,roomState4,new GregorianCalendar(2015,0,5).getTimeInMillis(),new GregorianCalendar(2015,1,20).getTimeInMillis(),1);
+        TimeTable timeTable9 = new TimeTable(room4,roomState1,new GregorianCalendar(2015,3,15).getTimeInMillis(),new GregorianCalendar(2015,3,15).getTimeInMillis(),1);
+        //TimeTable timeTable10 = new TimeTable(room4,roomState4,new GregorianCalendar(2015,3,14).getTimeInMillis(),new GregorianCalendar(2015,3,16).getTimeInMillis(),1);
+
+        timeTableRepository.save(timeTable1);
+//        timeTableRepository.save(timeTable2);
+        timeTableRepository.save(timeTable3);
+//        timeTableRepository.save(timeTable4);
+        timeTableRepository.save(timeTable5);
+//        timeTableRepository.save(timeTable6);
+        timeTableRepository.save(timeTable7);
+//        timeTableRepository.save(timeTable8);
+        timeTableRepository.save(timeTable9);
+//        timeTableRepository.save(timeTable10);
 
 
         Characteristic cr1 = new Characteristic("wi-fi",1);

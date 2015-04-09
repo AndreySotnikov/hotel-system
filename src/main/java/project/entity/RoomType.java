@@ -13,7 +13,7 @@ public class RoomType {
     private int roomTypeId;
     private String name;
     @OneToMany(mappedBy = "roomType")
-    private List<Room> rooms;
+    private transient List<Room> rooms;
     private int tenantId;
 
     public RoomType() {
@@ -80,8 +80,7 @@ public class RoomType {
     public String toString() {
         return "RoomType{" +
                 "roomTypeId=" + roomTypeId +
-                ", name='" + name + '\'' +
-                ", rooms=" + rooms +
+                ", name='" + name +
                 ", tenantId=" + tenantId +
                 '}';
     }

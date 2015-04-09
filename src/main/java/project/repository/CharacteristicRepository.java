@@ -16,6 +16,4 @@ public interface CharacteristicRepository extends CrudRepository<Characteristic,
 
     @Query("select c.characteristicId from Characteristic c where c.tenantId=:tenantId and c.name=:name")
     public int getIdByName(@Param("tenantId")int tenantId, @Param("name") String name);
-
-
 }

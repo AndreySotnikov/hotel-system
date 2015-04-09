@@ -17,7 +17,7 @@ public class Room {
     @ManyToOne
     private RoomType roomType;
     @OneToMany(mappedBy = "room")
-    private List<TimeTable> timeTables;
+    private transient List<TimeTable> timeTables;
     private int tenantId;
 
     public Room() {
@@ -107,7 +107,6 @@ public class Room {
                 ", floor=" + floor +
                 ", number=" + number +
                 ", roomType=" + roomType +
-                ", timeTables=" + timeTables +
                 ", tenantId=" + tenantId +
                 '}';
     }

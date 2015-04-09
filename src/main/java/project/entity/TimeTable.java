@@ -2,6 +2,7 @@ package project.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by andrey on 01.04.15.

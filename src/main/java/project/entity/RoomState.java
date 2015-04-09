@@ -15,7 +15,7 @@ public class RoomState {
     private int roomStateId;
     private String name;
     @OneToMany(mappedBy = "roomState")
-    private List<TimeTable> timeTable;
+    private transient List<TimeTable> timeTable;
     private int tenantId;
 
     public RoomState() {
@@ -82,8 +82,7 @@ public class RoomState {
     public String toString() {
         return "RoomState{" +
                 "roomStateId=" + roomStateId +
-                ", name='" + name + '\'' +
-                ", timeTable=" + timeTable +
+                ", name='" + name +
                 ", tenantId=" + tenantId +
                 '}';
     }
