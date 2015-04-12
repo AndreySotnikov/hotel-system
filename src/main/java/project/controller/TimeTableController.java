@@ -62,9 +62,12 @@ public class TimeTableController {
         if (tenantId == 0)
             tenantId = usersRepository.getTenantId(principal.getName());
         TimeTable timeTable = timeTableService.getOne(roomId,time,tenantId);
+        if (timeTable==null)
+            return "redirect:/timetable/all";
         modelMap.addAttribute("timetableId",timeTable.getTimeTableId());
         modelMap.addAttribute("room", roomService.getOne(timeTable.getRoom().getRoomId()));
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
+        modelMap.addAttribute("state", timeTable.getRoomState());
         modelMap.addAttribute("tenantId",tenantId);
         modelMap.addAttribute("tenantId",tenantId);
         Date from_d = new Date(timeTable.getFrom());
@@ -83,8 +86,12 @@ public class TimeTableController {
                          @RequestParam("timetableId") Integer timetableId){
         String[] splitStr = daterange.split(" - ");
         TimeTable timeTable = timeTableService.getOne(timetableId);
-        Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
-        Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        String[] array_from = splitStr[0].split("/");
+        String[] array_to = splitStr[1].split("/");
+        Long from = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1])).getTimeInMillis();
+        Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1])).getTimeInMillis();
+        //Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
+        //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         timeTable.setFrom(from);
         timeTable.setTo(to);
         timeTable.setRoomState(roomStateRepository.findOne(stateId));
@@ -109,8 +116,12 @@ public class TimeTableController {
                       @RequestParam("daterange") String daterange,
                       @RequestParam("tenantId") String tenantId){
         String[] splitStr = daterange.split(" - ");
-        Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
-        Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        String[] array_from = splitStr[0].split("/");
+        String[] array_to = splitStr[1].split("/");
+        Long from = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1])).getTimeInMillis();
+        Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1])).getTimeInMillis();
+        //Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
+        //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
         return "redirect:/timetable/all";
     }

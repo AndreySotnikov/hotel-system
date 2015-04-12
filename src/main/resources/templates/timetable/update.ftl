@@ -80,7 +80,7 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>);
+    $("#selectState").val(${state.roomStateId});
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {
