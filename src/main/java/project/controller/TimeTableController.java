@@ -16,6 +16,7 @@ import project.service.logic.RoomService;
 import project.service.logic.TimeTableService;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -46,9 +47,50 @@ public class TimeTableController {
             tenantId = usersRepository.getTenantId(principal.getName());
         System.err.println(timeTableService.getAll(tenantId));
         modelMap.addAttribute("timeTableList", timeTableService.getAll(tenantId));
+        modelMap.addAttribute("stateList", roomStateRepository.findAll());
+        modelMap.addAttribute("tenantId",tenantId);
         modelMap.addAttribute("count", 15);
         modelMap.addAttribute("roomList", roomService.getSortedAll(tenantId));
         return "timetable/all";
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    public String updateForm(@RequestParam("id") Integer roomId,
+                             @RequestParam("time") Long time,
+                             ModelMap modelMap,
+                             Principal principal){
+        if (tenantId == 0)
+            tenantId = usersRepository.getTenantId(principal.getName());
+        TimeTable timeTable = timeTableService.getOne(roomId,time,tenantId);
+        modelMap.addAttribute("timetableId",timeTable.getTimeTableId());
+        modelMap.addAttribute("room", roomService.getOne(timeTable.getRoom().getRoomId()));
+        modelMap.addAttribute("stateList", roomStateRepository.findAll());
+        modelMap.addAttribute("tenantId",tenantId);
+        modelMap.addAttribute("tenantId",tenantId);
+        Date from_d = new Date(timeTable.getFrom());
+        Date to_d = new Date(timeTable.getTo());
+        String from = String.valueOf(from_d.getMonth()+1)+"/"+String.valueOf(from_d.getDate())+"/"+String.valueOf(from_d.getYear()+1900);
+        String to = String.valueOf(to_d.getMonth()+1)+"/"+String.valueOf(to_d.getDate())+"/"+String.valueOf(to_d.getYear()+1900);
+        modelMap.addAttribute("date",from + " - " + to);
+        return "timetable/update";
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String update(//@PathVariable("id") Integer id,
+                         @RequestParam("stateId") Integer stateId,
+                         @RequestParam("daterange") String daterange,
+                         @RequestParam("tenantId") String tenantId,
+                         @RequestParam("timetableId") Integer timetableId){
+        String[] splitStr = daterange.split(" - ");
+        TimeTable timeTable = timeTableService.getOne(timetableId);
+        Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
+        Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        timeTable.setFrom(from);
+        timeTable.setTo(to);
+        timeTable.setRoomState(roomStateRepository.findOne(stateId));
+        timeTableService.add(timeTable);
+        //timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
+        return "redirect:/timetable/all";
     }
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
@@ -67,8 +109,8 @@ public class TimeTableController {
                       @RequestParam("daterange") String daterange,
                       @RequestParam("tenantId") String tenantId){
         String[] splitStr = daterange.split(" - ");
-        Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2)),Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
-        Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2)),Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
+        Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
         return "redirect:/timetable/all";
     }

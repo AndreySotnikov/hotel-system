@@ -17,16 +17,22 @@ public class TimeTableService {
     @Autowired
     TimeTableRepository ttRep;
 
+    public TimeTable getOne(int roomId,long time, int tenantId){
+        //return ttRep.findOne(roomId);
+        return ttRep.findOne(tenantId,time,roomId);
+    }
+
     public TimeTable getOne(int id){
         return ttRep.findOne(id);
     }
 
     public List<TimeTable> getAll(int tenantId){
         List<TimeTable> timeTables = new ArrayList<TimeTable>();
-        for (TimeTable timeTable : ttRep.findAll())
+        for (TimeTable timeTable : ttRep.findAll(tenantId))
             timeTables.add(timeTable);
         return timeTables;
     }
+
 
     public TimeTable add(TimeTable timeTable){
         return ttRep.save(timeTable);
