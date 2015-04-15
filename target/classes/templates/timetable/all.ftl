@@ -53,10 +53,6 @@
 
 </style>
 
-<button id="btn1">emptyTable</button>
-<button id="btn2">getInfo</button>
-<button id="btn3">fillTable</button>
-
 <table id="mytable" class="table table-bordered">
 
 </table>
@@ -116,7 +112,7 @@
         var d =nowDay.getTime();
 
         var timetable;
-        //$.get( "/timetable/update", { id: roomId, time: d } );
+//        $.get( "/timetable/update", { id: roomId, time: d } );
         window.location.replace("/timetable/update?id="+roomId+"&time="+d);
 
 //                .done(function( data ) {
@@ -233,7 +229,7 @@
         <#list roomList as room>
             $("table").append('<tr id=${room.roomId}></tr>');
             var elem = document.getElementsByTagName('table').lastChild;
-            $("table tr:last").append('<td id="roomname"><div><a href=/timetable/add/${room.roomId}>${room.roomId} ${room.roomType.name}</a></div></td>');
+            $("table tr:last").append('<td id="roomname"><div><a href=/timetable/show/${room.roomId}>${room.roomId} ${room.roomType.name}</a></div></td>');
             for (var j = 0; j < ${count}; j++) {
                 $("table tr:last").append('<td id="${room.roomId}-'+j+'" onclick="test(this.id)"><div> </div></td>');
             }

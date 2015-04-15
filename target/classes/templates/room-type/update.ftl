@@ -99,7 +99,7 @@
         var j = k;
         if (j < inputs.length) {
             j++;
-            var e = document.getElementById('selectCharacteristic' + j);
+//            var e = document.getElementById('selectCharacteristic' + j);
             $("form").after(
                     '<div id="mod-form" class="modal-footer">' +
                     '<div class="col-xs-7">' +
@@ -190,7 +190,7 @@
             var j = k;
             if (j < inputs.length) {
                 j++;
-                var e = document.getElementById('selectCharacteristic' + j);
+//                var e = document.getElementById('selectCharacteristic' + j);
                 $("form").after(
                         '<div id="mod-form" class="modal-footer">' +
                         '<div class="col-xs-7">' +

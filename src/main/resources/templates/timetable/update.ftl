@@ -43,7 +43,7 @@
             <!-- dialog body -->
             <div class="modal-body">
                 <button id="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
-                <b>Обновить ${room.roomType.name} номер</b>
+                <b>Обновить состояние</b>
             </div>
             <!-- dialog buttons -->
             <form method="post" action="/timetable/update" name="room">
@@ -68,6 +68,30 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >ФИО</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="fio" value="${guest.fio}" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >E-mail</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="email" value="${guest.email}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >Телефон</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="phone"  value="${guest.phone}">
+                        </div>
+                    </div>
                 </div>
 
                 <input id="sub" class="btn btn-primary" type="submit" value="Submit">
@@ -80,7 +104,7 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    $("#selectState").val(${state.roomStateId});
+    $("#selectState").val(${state});
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {

@@ -6,6 +6,7 @@ import project.entity.*;
 import project.entity.other.User_roles;
 import project.entity.other.Users;
 import project.repository.*;
+import project.service.logic.GuestService;
 import project.service.login.EncryptPassword;
 
 import java.io.UnsupportedEncodingException;
@@ -26,6 +27,7 @@ public class Launcher {
         UsersRepository u = context.getBean(UsersRepository.class);
         AttributeRepository ar = context.getBean(AttributeRepository.class);
         CharacteristicRepository cr = context.getBean(CharacteristicRepository.class);
+        GuestRepository guestRepository = context.getBean(GuestRepository.class);
 
         RoomRepository roomRepository = context.getBean(RoomRepository.class);
         RoomTypeRepository roomTypeRepository = context.getBean(RoomTypeRepository.class);
@@ -56,15 +58,24 @@ public class Launcher {
         roomRepository.save(room2);
         roomRepository.save(room3);
         roomRepository.save(room4);
+
+        Guest guest = new Guest("qqqq","123456","qwerty@mail.ru",1);
+        guestRepository.save(guest);
+
         TimeTable timeTable1 = new TimeTable(room,roomState1,new GregorianCalendar(2015,3,8).getTimeInMillis(),new GregorianCalendar(2015,3,22).getTimeInMillis(),1);
+        timeTable1.setGuest(guest);
         //TimeTable timeTable2 = new TimeTable(room,roomState1,new GregorianCalendar(2015,3,5).getTimeInMillis(),new GregorianCalendar(2015,3,10).getTimeInMillis(),1);
         TimeTable timeTable3 = new TimeTable(room1,roomState1,new GregorianCalendar(2015,3,5).getTimeInMillis(),new GregorianCalendar(2015,3,9).getTimeInMillis(),1);
+        timeTable3.setGuest(guest);
         //TimeTable timeTable4 = new TimeTable(room1,roomState3,new GregorianCalendar(2015,3,8).getTimeInMillis(),new GregorianCalendar(2015,3,18).getTimeInMillis(),1);
         TimeTable timeTable5 = new TimeTable(room2,roomState3,new GregorianCalendar(2015,3,23).getTimeInMillis(),new GregorianCalendar(2015,3,25).getTimeInMillis(),1);
+        timeTable5.setGuest(guest);
         //TimeTable timeTable6 = new TimeTable(room2,roomState3,new GregorianCalendar(2015,3,16).getTimeInMillis(),new GregorianCalendar(2015,3,28).getTimeInMillis(),1);
         TimeTable timeTable7 = new TimeTable(room3,roomState4,new GregorianCalendar(2015,3,15).getTimeInMillis(),new GregorianCalendar(2015,3,22).getTimeInMillis(),1);
+        timeTable7.setGuest(guest);
         //TimeTable timeTable8 = new TimeTable(room3,roomState4,new GregorianCalendar(2015,0,5).getTimeInMillis(),new GregorianCalendar(2015,1,20).getTimeInMillis(),1);
         TimeTable timeTable9 = new TimeTable(room4,roomState1,new GregorianCalendar(2015,3,15).getTimeInMillis(),new GregorianCalendar(2015,3,15).getTimeInMillis(),1);
+        timeTable9.setGuest(guest);
         //TimeTable timeTable10 = new TimeTable(room4,roomState4,new GregorianCalendar(2015,3,14).getTimeInMillis(),new GregorianCalendar(2015,3,16).getTimeInMillis(),1);
 
         timeTableRepository.save(timeTable1);

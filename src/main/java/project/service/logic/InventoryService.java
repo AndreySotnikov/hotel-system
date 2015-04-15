@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by Green-L on 14.04.2015.
  */
+@Service
 public class InventoryService {
     @Autowired
     InventoryRepository irep;

@@ -50,4 +50,8 @@ public class TimeTableService {
         updTimeTable.setRoomState(timeTable.getRoomState());
         return ttRep.save(updTimeTable);
     }
+
+    public List<TimeTable> getAllByRoom(int roomId){
+        return ttRep.findAllByRoom(roomId);
+    }
 }

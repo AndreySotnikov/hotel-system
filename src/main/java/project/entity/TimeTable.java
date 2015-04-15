@@ -23,6 +23,8 @@ public class TimeTable {
     @Column(name = "date_to")
     private Long to;
     private int tenantId;
+    @ManyToOne
+    private Guest guest;
 
     public TimeTable() {
     }
@@ -81,6 +83,14 @@ public class TimeTable {
 
     public void setTenantId(int tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
     }
 
     @Override

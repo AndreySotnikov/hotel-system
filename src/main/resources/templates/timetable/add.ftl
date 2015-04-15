@@ -43,35 +43,19 @@
             <!-- dialog body -->
             <div class="modal-body">
                 <button id="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
-                <b>Обновить ${room.roomType.name} номер</b>
+                <b>Добавить ${room.roomType.name} номер</b>
             </div>
             <!-- dialog buttons -->
             <form method="post" action="/timetable/add/${room.roomId}" name="room">
                 <div class="container-fluid">
 
-                    <input type="text" name="daterange" value="01/01/2015 - 01/31/2015" />
+                    <input type="text" id="range" name="daterange" />
 
                     <script type="text/javascript">
                         $(function() {
                             $('input[name="daterange"]').daterangepicker();
                         });
                     </script>
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Этаж</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                        <#--<input type="text" class="form-control" name="floor" <#if room?? && room.floor??>value="${room.floor}"></#if>-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Номер</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="number" <#if room?? && room.number??>value="${room.number}"</#if> pattern="\d*">-->
-                        <#--</div>-->
-                    <#--</div>-->
                     <div class="form-group">
                         <div class="col-xs-4">
                             <label >Статус</label>
@@ -82,6 +66,30 @@
                                 <option value="${state.roomStateId}">${state.name}</option>
                             </#list>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >ФИО</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="fio" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >E-mail</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="email" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label >Телефон</label>
+                        </div>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="phone" >
                         </div>
                     </div>
                 </div>
@@ -95,6 +103,19 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+    function curDate(){
+        var e = document.getElementById('range');
+        var nowDate = new Date();
+        var v = '' + nowDate.getMonth() + '\\' + nowDate.getDate() + '\\' + nowDate.getFullYear();
+        v = v+' - '+v;
+        e.value = v;
+    };
+
+    $(document).ready(function(){
+        curDate();
+    });
+
     $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>);
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
