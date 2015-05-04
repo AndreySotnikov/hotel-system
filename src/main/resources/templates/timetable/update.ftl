@@ -48,50 +48,122 @@
             <!-- dialog buttons -->
             <form method="post" action="/timetable/update" name="room">
                 <div class="container-fluid">
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a href="#status" data-toggle="tab">Статус</a></li>
+                        <li><a href="#info" data-toggle="tab">Клиент</a></li>
+                        <li><a href="#services" data-toggle="tab">Сервисы</a></li>
+                    </ul>
 
-                    <input type="text" name="daterange" value="${date}" />
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="status">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Дата</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" id="range" class="form-control" name="daterange" value="${date}"/>
+                                </div>
+                            </div>
 
-                    <script type="text/javascript">
-                        $(function() {
-                            $('input[name="daterange"]').daterangepicker();
-                        });
-                    </script>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >Статус</label>
+
+
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Статус</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select id="selectState" class="form-control" name="stateId">
+                                    <#list stateList as state>
+                                        <option value="${state.roomStateId}">${state.name}</option>
+                                    </#list>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-8">
-                            <select id="selectState" class="form-control" name="stateId">
-                            <#list stateList as state>
-                                <option value="${state.roomStateId}">${state.name}</option>
-                            </#list>
-                            </select>
+                        <div class="tab-pane" id="info">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >ФИО</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="fio" value="${guest.fio}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >E-mail</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="email" value="${guest.email}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Телефон</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="phone" value="${guest.phone}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="services">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Сервисы</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select id="inventory" class="form-control" name="inventory" multiple>
+                                    <#list inventoryList as inventory>
+                                        <option value="${inventory.inventoryId}">${inventory.name}</option>
+                                    </#list>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >ФИО</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="fio" value="${guest.fio}" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >E-mail</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="email" value="${guest.email}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >Телефон</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="phone"  value="${guest.phone}">
-                        </div>
-                    </div>
+                    <#--<input type="text" name="daterange" value="${date}" />-->
+
+                    <#--<script type="text/javascript">-->
+                        <#--$(function() {-->
+                            <#--$('input[name="daterange"]').daterangepicker();-->
+                        <#--});-->
+                    <#--</script>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >Статус</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<select id="selectState" class="form-control" name="stateId">-->
+                            <#--<#list stateList as state>-->
+                                <#--<option value="${state.roomStateId}">${state.name}</option>-->
+                            <#--</#list>-->
+                            <#--</select>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >ФИО</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="fio" value="${guest.fio}" >-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >E-mail</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="email" value="${guest.email}">-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >Телефон</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="phone"  value="${guest.phone}">-->
+                        <#--</div>-->
+                    <#--</div>-->
                 </div>
 
                 <input id="sub" class="btn btn-primary" type="submit" value="Submit">
@@ -104,6 +176,19 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+
+    $.get(
+            "/rest-time-table/inventory?id=${id}",
+            onAjaxSuccess
+    );
+
+    function onAjaxSuccess(data) {
+        $.each(data, function (i, e) {
+            $("#inventory option[value='" + e + "']").prop("selected", true);
+        });
+    }
+
     $("#selectState").val(${state});
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown

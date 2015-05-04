@@ -42,4 +42,10 @@ public class RestTimeTableController {
         TimeTable timeTable = timeTableService.getOne(roomId,time,tenantId);
         return timeTable;
     }
+
+    @RequestMapping("inventory")
+    public int[] getInventory(@RequestParam("id") int id){
+        int[] inv = timeTableService.getInventory(id);
+        return inv;
+    }
 }

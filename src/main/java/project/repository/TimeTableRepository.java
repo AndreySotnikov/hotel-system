@@ -21,6 +21,8 @@ public interface TimeTableRepository extends CrudRepository<TimeTable,Integer> {
     @Query("select tt from TimeTable tt where tt.room.roomId=:roomId")
     public List<TimeTable> findAllByRoom(@Param("roomId")int roomId);
 
+    @Query(value = "select INVENTORIES_INVENTORYID from TIME_TABLE_INVENTORIES where TIME_TABLE_TIMETABLEID=:id",nativeQuery = true)
+    public int[] getInventory(@Param("id") int id);
 //    @Query("select tt from TimeTable tt where tt.room.roomId=:roomId")
 //    public TimeTable findOne(@Param("roomId") int roomId);
 }

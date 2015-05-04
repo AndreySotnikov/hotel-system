@@ -33,6 +33,7 @@ public class Launcher {
         RoomTypeRepository roomTypeRepository = context.getBean(RoomTypeRepository.class);
         TimeTableRepository timeTableRepository = context.getBean(TimeTableRepository.class);
         RoomStateRepository roomStateRepository = context.getBean(RoomStateRepository.class);
+        InventoryRepository inventoryRepository = context.getBean(InventoryRepository.class);
 
 
         RoomState roomState1 = new RoomState("Занято",1);
@@ -88,6 +89,10 @@ public class Launcher {
 //        timeTableRepository.save(timeTable8);
         timeTableRepository.save(timeTable9);
 //        timeTableRepository.save(timeTable10);
+
+        inventoryRepository.save(new Inventory("Inv1",1));
+        inventoryRepository.save(new Inventory("Inv2",1));
+        inventoryRepository.save(new Inventory("Inv3",1));
 
 
         Characteristic cr1 = new Characteristic("wi-fi",1);

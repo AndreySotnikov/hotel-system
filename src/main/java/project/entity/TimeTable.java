@@ -3,6 +3,7 @@ package project.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by andrey on 01.04.15.
@@ -25,6 +26,9 @@ public class TimeTable {
     private int tenantId;
     @ManyToOne
     private Guest guest;
+
+    @ManyToMany
+    private List<Inventory> inventories;
 
     public TimeTable() {
     }
@@ -91,6 +95,14 @@ public class TimeTable {
 
     public void setGuest(Guest guest) {
         this.guest = guest;
+    }
+
+    public List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
     }
 
     @Override

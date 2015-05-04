@@ -54,4 +54,8 @@ public class TimeTableService {
     public List<TimeTable> getAllByRoom(int roomId){
         return ttRep.findAllByRoom(roomId);
     }
+
+    public int[] getInventory(int id){
+        return ttRep.getInventory(id);
+    }
 }

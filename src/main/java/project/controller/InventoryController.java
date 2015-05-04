@@ -43,6 +43,7 @@ public class InventoryController {
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") int id, ModelMap modelMap) {
+        modelMap.addAttribute("tenantId", tenantId);
         modelMap.addAttribute("inventory", inventoryService.getOne(id));
         return "inventory/add";
     }

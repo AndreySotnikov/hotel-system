@@ -28,11 +28,9 @@
                 <#--<li><a href="/room/all">Номера</a></li>-->
                 <#--<li><a href="/room-type/all">Типы номеров</a></li>-->
                 <li><a href="/timetable/all">Состояние</a></li>
-                <li><a href="/administration">Администрирование</a></li>
-                <#--<li><a href="/administration">Администрирование</li>-->
+                <#--<li><a href="/inventory/all">Сервисы</a></li>-->
+                <li><a href="/administration">Администрирование</li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-
-<div class="container">

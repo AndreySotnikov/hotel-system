@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.dto.TimetableDto;
 import project.entity.Guest;
+import project.entity.Inventory;
 import project.entity.TimeTable;
 import project.repository.RoomStateRepository;
 import project.repository.TimeTableRepository;
 import project.repository.UsersRepository;
 import project.service.logic.GuestService;
+import project.service.logic.InventoryService;
 import project.service.logic.RoomService;
 import project.service.logic.TimeTableService;
 
@@ -48,6 +50,9 @@ public class TimeTableController {
 
     @Autowired
     GuestService guestService;
+
+    @Autowired
+    InventoryService inventoryService;
 
     @RequestMapping(value = "all")
     public String all(ModelMap modelMap, Principal principal) {
@@ -95,6 +100,8 @@ public class TimeTableController {
             return "redirect:/timetable/add/"+roomId;
         modelMap.addAttribute("timetableId",timeTable.getTimeTableId());
         //modelMap.addAttribute("room", roomService.getOne(roomId));
+        modelMap.addAttribute("inventoryList", inventoryService.getAll(tenantId));
+        modelMap.addAttribute("id",timeTable.getTimeTableId());
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
         modelMap.addAttribute("state", timeTable.getRoomState().getRoomStateId());
         modelMap.addAttribute("tenantId",tenantId);
@@ -114,7 +121,8 @@ public class TimeTableController {
                          @RequestParam("fio") String fio,
                          @RequestParam("email") String email,
                          @RequestParam("phone") String phone,
-                         @RequestParam("timetableId") Integer timetableId){
+                         @RequestParam("timetableId") Integer timetableId,
+                         @RequestParam("inventory") int[] inventory){
 
         String[] splitStr = daterange.split(" - ");
         TimeTable timeTable = timeTableService.getOne(timetableId);
@@ -128,6 +136,10 @@ public class TimeTableController {
         timeTable.setTo(to);
         timeTable.setRoomState(roomStateRepository.findOne(stateId));
         guestService.update(timeTable.getGuest().getIdGuest(),fio, phone, email);
+        List<Inventory> inventories=new ArrayList<Inventory>();
+        for (int i : inventory)
+            inventories.add(inventoryService.getOne(i));
+        timeTable.setInventories(inventories);
         timeTableService.add(timeTable);
         //timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
         return "redirect:/timetable/all";
@@ -137,6 +149,7 @@ public class TimeTableController {
     public String addForm(@PathVariable("id") Integer id, ModelMap modelMap, Principal principal){
         if (tenantId == 0)
             tenantId = usersRepository.getTenantId(principal.getName());
+        modelMap.addAttribute("inventoryList",inventoryService.getAll(tenantId));
         modelMap.addAttribute("room", roomService.getOne(id));
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
         modelMap.addAttribute("tenantId",tenantId);
@@ -149,7 +162,8 @@ public class TimeTableController {
                       @RequestParam("daterange") String daterange,
                       @RequestParam("fio") String fio,
                       @RequestParam("email") String email,
-                      @RequestParam("phone") String phone){
+                      @RequestParam("phone") String phone,
+                      @RequestParam("inventory") int[] inventory){
 
         String[] splitStr = daterange.split(" - ");
         String[] array_from = splitStr[0].split("/");
@@ -160,6 +174,10 @@ public class TimeTableController {
         //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         TimeTable tt = new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,tenantId);
         tt.setGuest(guestService.add(new Guest(fio, phone, email, tenantId)));
+        List<Inventory> inventories=new ArrayList<Inventory>();
+        for (int i : inventory)
+            inventories.add(inventoryService.getOne(i));
+        tt.setInventories(inventories);
         timeTableService.add(tt);
         return "redirect:/timetable/all";
     }

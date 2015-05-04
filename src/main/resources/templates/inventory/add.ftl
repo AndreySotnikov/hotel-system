@@ -34,51 +34,24 @@
             <!-- dialog body -->
             <div class="modal-body">
                 <button id="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
-                <#if room?? && room.roomId??>
-                    <b>Редактировать номер</b>
+                <#if inventory?? && inventory.inventoryId??>
+                    <b>Редактировать сервис</b>
                 <#else>
-                    <b>Добавить номер</b>
+                    <b>Добавить сервис</b>
                 </#if>
             </div>
             <!-- dialog buttons -->
-            <form method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>" name="room">
+            <form method="post" action="<#if inventory?? && inventory.inventoryId??>/inventory/update/${inventory.inventoryId}<#else>/inventory/add</#if>" name="inventory">
                 <div class="container-fluid">
                 <#--<div class="row">-->
                 <div class="form-group">
                     <div class="col-xs-4">
-                        <label >Этаж</label>
+                        <label >Название</label>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="floor" <#if room?? && room.floor??>value="${room.floor}"></#if>
+                        <input type="text" class="form-control" name="name" <#if inventory?? && inventory.name??>value="${inventory.name}"></#if>
                     </div>
                 </div>
-                <#--</div>-->
-                <#--<div class="row">-->
-                <div class="form-group">
-                    <div class="col-xs-4">
-                        <label >Номер</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" name="number" <#if room?? && room.number??>value="${room.number}"</#if> pattern="\d*">
-                    </div>
-                </div>
-                <#--</div>-->
-                <#--<div class="row">-->
-                <div class="form-group">
-                    <div class="col-xs-4">
-                        <label >Тип</label>
-                    </div>
-                    <div class="col-xs-8">
-                        <select id="selectType" class="form-control" name="roomType">
-                        <#list roomTypeList as roomType>
-                            <option value="${roomType.roomTypeId}">${roomType.name}</option>
-                        </#list>
-                        </select>
-                    </div>
-                </div>
-                <#--</div>-->
-                </div>
-
                 <input id="sub" class="btn btn-primary" type="submit" value="Submit">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
@@ -89,7 +62,6 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>);
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {
@@ -112,25 +84,4 @@
         "show" : true // ensure the modal is shown immediately
     });
 </script>
-
-<#--<form method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>" name="room">-->
-    <#--<div class="form-group">-->
-        <#--<label >Этаж</label>-->
-            <#--<input type="text" class="form-control" name="floor" <#if room?? && room.floor??>value="${room.floor}"></#if>-->
-    <#--</div>-->
-    <#--<div class="form-group">-->
-        <#--<label >Номер</label>-->
-        <#--<input type="text" class="form-control" name="number" <#if room?? && room.number??>value="${room.number}"</#if> pattern="\d*">-->
-    <#--</div>-->
-    <#--<div class="form-group">-->
-        <#--<label >Тип</label>-->
-        <#--<select class="form-control" name="roomType">-->
-        <#--<#list roomTypeList as roomType>-->
-            <#--<option value="${roomType.roomTypeId}">${roomType.name}</option>-->
-        <#--</#list>-->
-        <#--</select>-->
-    <#--</div>-->
-    <#--<input type="hidden" name="tenantId" value="${tenantId}">-->
-    <#--<input class="btn btn-primary" type="submit" value="Submit">-->
-<#--</form>-->
 <#include "/part/footer.ftl">

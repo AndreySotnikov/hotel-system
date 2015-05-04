@@ -7,6 +7,7 @@ package project.entity;
 import javax.persistence.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Green-L on 14.04.2015.
@@ -20,6 +21,9 @@ public class Inventory {
     private String name;
 
     private int tenantId;
+
+    @ManyToMany(mappedBy = "inventories")
+    private transient List<TimeTable> timeTables;
 
     public Inventory() {
     }
@@ -53,6 +57,14 @@ public class Inventory {
         this.tenantId = tenantId;
     }
 
+
+    public List<TimeTable> getTimeTables() {
+        return timeTables;
+    }
+
+    public void setTimeTables(List<TimeTable> timeTables) {
+        this.timeTables = timeTables;
+    }
 
     @Override
     public boolean equals(Object o) {

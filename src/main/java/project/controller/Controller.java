@@ -92,4 +92,9 @@ public class Controller {
 
         return "home";
     }
+
+    @RequestMapping("/administration")
+    public String administration(){
+        return "administration";
+    }
 }

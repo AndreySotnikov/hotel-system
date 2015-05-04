@@ -46,57 +46,163 @@
                 <b>Добавить ${room.roomType.name} номер</b>
             </div>
             <!-- dialog buttons -->
+            <#--<form method="post" action="/timetable/add/${room.roomId}" name="room">-->
+                <#--<div class="container-fluid">-->
+
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >Дата</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" id="range" name="daterange" />-->
+                        <#--</div>-->
+                    <#--</div>-->
+
+                    <#--<script type="text/javascript">-->
+                        <#--$(function() {-->
+                            <#--$('input[name="daterange"]').daterangepicker();-->
+                        <#--});-->
+                    <#--</script>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >Статус</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<select id="selectState" class="form-control" name="stateId">-->
+                            <#--<#list stateList as state>-->
+                                <#--<option value="${state.roomStateId}">${state.name}</option>-->
+                            <#--</#list>-->
+                            <#--</select>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >ФИО</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="fio" >-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >E-mail</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="email" >-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="form-group">-->
+                        <#--<div class="col-xs-4">-->
+                            <#--<label >Телефон</label>-->
+                        <#--</div>-->
+                        <#--<div class="col-xs-8">-->
+                            <#--<input type="text" class="form-control" name="phone" >-->
+                        <#--</div>-->
+                    <#--</div>-->
+                <#--</div>-->
+
+                <#--<input id="sub" class="btn btn-primary" type="submit" value="Submit">-->
+                <#--<input id="hid" type="hidden" name="tenantId" value="${tenantId}">-->
+            <#--</form>-->
+
+
             <form method="post" action="/timetable/add/${room.roomId}" name="room">
                 <div class="container-fluid">
 
-                    <input type="text" id="range" name="daterange" />
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="active"><a href="#status" data-toggle="tab">Статус</a></li>
+                        <li><a href="#info" data-toggle="tab">Клиент</a></li>
+                        <li><a href="#services" data-toggle="tab">Сервисы</a></li>
+                    </ul>
 
-                    <script type="text/javascript">
-                        $(function() {
-                            $('input[name="daterange"]').daterangepicker();
-                        });
-                    </script>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >Статус</label>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="status">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Дата</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" id="range" class="form-control" name="daterange" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Статус</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select id="selectState" class="form-control" name="stateId">
+                                    <#list stateList as state>
+                                        <option value="${state.roomStateId}">${state.name}</option>
+                                    </#list>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-8">
-                            <select id="selectState" class="form-control" name="stateId">
-                            <#list stateList as state>
-                                <option value="${state.roomStateId}">${state.name}</option>
-                            </#list>
-                            </select>
+                        <div class="tab-pane" id="info">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >ФИО</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="fio" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >E-mail</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="email" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Телефон</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control" name="phone" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="services">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label >Сервисы</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select id="inventory" class="form-control" name="inventory" multiple>
+                                    <#list inventoryList as inventory>
+                                        <option value="${inventory.inventoryId}">${inventory.name}</option>
+                                    </#list>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >ФИО</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="fio" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >E-mail</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="email" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4">
-                            <label >Телефон</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="text" class="form-control" name="phone" >
-                        </div>
-                    </div>
+
+
+
                 </div>
 
                 <input id="sub" class="btn btn-primary" type="submit" value="Submit">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
+
+            <script type="text/javascript">
+                $(function() {
+                    $('input[name="daterange"]').daterangepicker();
+                });
+            </script>
+
+            <#--<script>-->
+                <#--$('#myTab a').click(function (e) {-->
+                    <#--e.preventDefault()-->
+                    <#--$(this).tab('show')-->
+                <#--})-->
+            <#--</script>-->
+
         </div>
     </div>
 </div>
@@ -107,7 +213,7 @@
     function curDate(){
         var e = document.getElementById('range');
         var nowDate = new Date();
-        var v = '' + nowDate.getMonth() + '\\' + nowDate.getDate() + '\\' + nowDate.getFullYear();
+        var v = '' + nowDate.getMonth() + '\/' + nowDate.getDate() + '\/' + nowDate.getFullYear();
         v = v+' - '+v;
         e.value = v;
     };

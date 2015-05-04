@@ -25,10 +25,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/room/all">Номера</a></li>
-                <li><a href="/room-type/all">Типы номеров</a></li>
+                <#--<li><a href="/room/all">Номера</a></li>-->
+                <#--<li><a href="/room-type/all">Типы номеров</a></li>-->
                 <li><a href="/timetable/all">Состояние</a></li>
-                <li><a href="/inventory/all">Сервисы</a></li>
+                <li><a href="/administration">Администрирование</a></li>
+                <#--<li><a href="/administration">Администрирование</li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
