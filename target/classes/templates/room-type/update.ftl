@@ -98,7 +98,6 @@
         }
         var j = k;
         if (j < inputs.length) {
-            j++;
 //            var e = document.getElementById('selectCharacteristic' + j);
             $("form").after(
                     '<div id="mod-form" class="modal-footer">' +
@@ -121,12 +120,12 @@
                         .done(function (id) {
                             charId = parseInt(id);
 
-                            $('#selectCharacteristic' + j + ' option[value=' + 0 + ']').remove();
-                            $('#selectCharacteristic' + j).append($('<option>', {
+                            $('#selectType' + j + ' option[value=' + 0 + ']').remove();
+                            $('#selectType' + j).append($('<option>', {
                                 value: charId,
                                 text: input.value
                             }));
-                            $('#selectCharacteristic' + j).append($('<option>', {
+                            $('#selectType' + j).append($('<option>', {
                                 value: 0,
                                 text: "Добавить характеристику"
                             }));
@@ -190,6 +189,7 @@
             var j = k;
             if (j < inputs.length) {
                 j++;
+                j = j - ${valueList?size};
 //                var e = document.getElementById('selectCharacteristic' + j);
                 $("form").after(
                         '<div id="mod-form" class="modal-footer">' +
