@@ -50,21 +50,16 @@
 
 
 <!-- Bootstrap styles -->
-<#--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <!-- Generic page styles -->
-<link rel="stylesheet" href="http://blueimp.github.io/JavaScript-Load-Image/css/style.css">
+<link rel="stylesheet" href="/assets/file-uploader/css/style.css">
 <!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="/assets/file-uploader/css/blueimp-gallery.min.css">
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<link rel="stylesheet" href="http://blueimp.github.io/jQuery-File-Upload/css/jquery.fileupload.css">
-<link rel="stylesheet" href="href=" http://blueimp.github.io/jQuery-File-Upload/css/jquery.fileupload-ui.css">
+<link rel="stylesheet" href="/assets/file-uploader/css/jquery.fileupload.css">
+<link rel="stylesheet" href="/assets/file-uploader/css/jquery.fileupload-ui.css">
 <!-- CSS adjustments for browsers with JavaScript disabled -->
-<noscript>
-    <link rel="stylesheet" href="css/jquery.fileupload-noscript.css">
-</noscript>
-<noscript>
-    <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
-</noscript>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 <script src="http://blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
@@ -134,7 +129,7 @@
             </#if>
             </div>
             <!-- dialog buttons -->
-            <form method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>"
+            <form id="roomForm" method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>"
                   name="room">
                 <div class="container-fluid">
                 <#--<div class="row">-->
@@ -176,30 +171,43 @@
                 <#--</div>-->
                 </div>
 
-                <input id="sub" class="btn btn-primary" type="submit" value="Submit">
+                <#--<input id="sub" class="btn btn-primary" type="submit" value="Submit">-->
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
-            <form id="fileupload" action='/room/test' method="POST" enctype="multipart/form-data">
-                <!-- Redirect browsers with JavaScript disabled to the origin page -->
-                <noscript><input type="hidden" name="redirect" value="http://blueimp.github.io/jQuery-File-Upload/">
-                </noscript>
+
+            <div id="pic">
+            <#if room??>
+                <#list imageList as image>
+                    <img src="/assets/pictures/${image.newFilename}" class="img-rounded">
+                    <#--<img src="/assets/pictures/2cfb4f46-663c-4b26-935b-e3d27397202c.png" class="img-rounded">-->
+                </#list>
+            </#if>
+            </div>
+
+
+            <form id="fileupload" action='/room/upload' method="POST" enctype="multipart/form-data">
                 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                 <div class="row fileupload-buttonbar">
-                    <div class="col-lg-7">
+                    <div class="col-lg-12">
                         <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
-
                 </span>
-
-                        <button type="submit" class="btn btn-primary start">
-                            <i class="glyphicon glyphicon-upload"></i>
-                            <span>Start upload</span>
-                        </button>
-
-                    </div>
+                <button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                </div>
                     <!-- The global progress state -->
                     <div class="col-lg-5 fileupload-progress fade">
                         <!-- The global progress bar -->
@@ -216,6 +224,7 @@
                     <tbody class="files"></tbody>
                 </table>
             </form>
+            <input id="sub" class="btn btn-primary" type="submit" value="Submit">
         </div>
     </div>
 </div>
@@ -223,6 +232,32 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+    <#if room?? && room.roomId??>
+    $(document).ready(function(){
+        $.get(
+                "/room/${room.roomId}/getpic",
+                onAjaxSuccess
+        );
+    });
+
+
+    function onAjaxSuccess(data)
+    {
+        var images = $("img")
+        for (var i = 0; i < data.length; i++) {
+            var str1="/assets/pictures/";
+            var str2=data[i].thumbnailFilename;
+            var tmp = str1.concat(str2);
+            $(images[i]).attr("src", tmp);
+        }
+    }
+
+    </#if>
+
+    $("#sub").click(function () {
+        $("#roomForm").submit();
+    });
+
     $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>)
     ;
 
@@ -278,7 +313,7 @@
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: 'test'
+            url: 'upload'
         });
 
         // Enable iframe cross-domain access via redirect option:
@@ -303,13 +338,13 @@
             {% if (!i && !o.options.autoUpload) { %}
                 <button class="btn btn-primary start" disabled>
                     <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start</span>
+
                 </button>
             {% } %}
             {% if (!i) { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
+
                 </button>
             {% } %}
         </td>
@@ -347,7 +382,7 @@
             {% if (file.deleteUrl) { %}
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
+
                 </button>
                 <input type="checkbox" name="delete" value="1" class="toggle">
             {% } else { %}

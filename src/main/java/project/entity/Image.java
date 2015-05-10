@@ -1,4 +1,4 @@
-package project.dto;
+package project.entity;
 
 /**
  * Created by andrey on 08.05.15.
@@ -28,30 +28,21 @@ package project.dto;
  */
         import java.io.Serializable;
         import java.util.Date;
-        import javax.persistence.Column;
-        import javax.persistence.Entity;
-        import javax.persistence.GeneratedValue;
-        import javax.persistence.GenerationType;
-        import javax.persistence.Id;
-        import javax.persistence.NamedQueries;
-        import javax.persistence.NamedQuery;
-        import javax.persistence.Table;
-        import javax.persistence.Temporal;
-        import javax.persistence.TemporalType;
-        import javax.persistence.Transient;
+        import javax.persistence.*;
+
         import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author jdmr
  */
-
-@JsonIgnoreProperties({"id","thumbnailFilename","newFilename","contentType","dateCreated","lastUpdated"})
+@Entity
+@JsonIgnoreProperties({"id","thumbnailFilename","newFilename","contentType","dateCreated","lastUpdated","room"})
 public class Image implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int imageId;
     private String name;
     private String thumbnailFilename;
     private String newFilename;
@@ -71,21 +62,23 @@ public class Image implements Serializable {
     private String deleteUrl;
     @Transient
     private String deleteType;
-
+    @ManyToOne
+    private Room room;
+    private int tenantId;
     public Image() {}
 
     /**
-     * @return the id
+     * @return the imageId
      */
-    public Long getId() {
-        return id;
+    public int getImageId() {
+        return imageId;
     }
 
     /**
-     * @param id the id to set
+     * @param imageId the id to set
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     /**
@@ -254,6 +247,22 @@ public class Image implements Serializable {
      */
     public void setDeleteType(String deleteType) {
         this.deleteType = deleteType;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public int getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     @Override

@@ -19,6 +19,8 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private transient List<TimeTable> timeTables;
     private int tenantId;
+    @OneToMany(mappedBy = "room")
+    private transient List<Image> images;
 
     public Room() {
     }
@@ -76,6 +78,14 @@ public class Room {
 
     public void setTenantId(int tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     @Override
