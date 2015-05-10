@@ -1,6 +1,8 @@
 package project.controller;
 
-import org.h2.util.IOUtils;
+import org.apache.commons.codec.binary.Base64;
+
+import org.apache.commons.io.IOUtils;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -65,9 +67,19 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String updateForm(@PathVariable("id") int id, ModelMap modelMap) {
+    public String updateForm(@PathVariable("id") int id, ModelMap modelMap) throws IOException {
         modelMap.addAttribute("room",roomService.getOne(id));
-        modelMap.addAttribute("imageList", imageService.getAll(id));
+        List<Image> imageList = imageService.getAll(id);
+        List<String> images = new ArrayList<String>();
+        for(Image i : imageList) {
+            File img = new File(fileUploadDirectory+i.getNewFilename());
+            byte[] imgBytes = IOUtils.toByteArray(new FileInputStream(img));
+            byte[] imgBytesAsBase64 = Base64.encodeBase64(imgBytes);
+            String imgDataAsBase64 = new String(imgBytesAsBase64);
+            String imgAsBase64 = "data:image/png;base64," + imgDataAsBase64;
+            images.add(imgAsBase64);
+        }
+        modelMap.addAttribute("imageList", images);
         modelMap.addAttribute("roomTypeList",roomTypeService.getAll(tenantId));
         modelMap.addAttribute("tenantId", tenantId);
         return "room/add";

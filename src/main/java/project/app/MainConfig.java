@@ -34,6 +34,7 @@ public class MainConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+        registry.addResourceHandler("/assets/pictures/**").addResourceLocations("classpath:/assets/pictures");
     }
 
     @Bean(name = "dataSource")

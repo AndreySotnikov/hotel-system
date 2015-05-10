@@ -114,6 +114,9 @@
         margin-right: 15px;
         margin-left: auto;
     }
+    img {
+        padding: 10px;
+    }
 </style>
 <!-- set up the modal to start hidden and fade in and out -->
 <div id="myModal" class="modal fade">
@@ -175,16 +178,16 @@
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
 
-            <div id="pic">
             <#if room??>
+            <div id="pic" class="col-xs-12">
                 <#list imageList as image>
-                    <img src="/assets/pictures/${image.newFilename}" class="img-rounded">
+                    <img src="${image}" class="img-responsive">
                     <#--<img src="/assets/pictures/2cfb4f46-663c-4b26-935b-e3d27397202c.png" class="img-rounded">-->
                 </#list>
-            </#if>
             </div>
+            </#if>
 
-
+            <div class="col-xs-12">
             <form id="fileupload" action='/room/upload' method="POST" enctype="multipart/form-data">
                 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                 <div class="row fileupload-buttonbar">
@@ -224,6 +227,7 @@
                     <tbody class="files"></tbody>
                 </table>
             </form>
+            </div>
             <input id="sub" class="btn btn-primary" type="submit" value="Submit">
         </div>
     </div>
@@ -232,27 +236,27 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    <#if room?? && room.roomId??>
-    $(document).ready(function(){
-        $.get(
-                "/room/${room.roomId}/getpic",
-                onAjaxSuccess
-        );
-    });
+    <#--<#if room?? && room.roomId??>-->
+    <#--$(document).ready(function(){-->
+        <#--$.get(-->
+                <#--"/room/${room.roomId}/getpic",-->
+                <#--onAjaxSuccess-->
+        <#--);-->
+    <#--});-->
 
 
-    function onAjaxSuccess(data)
-    {
-        var images = $("img")
-        for (var i = 0; i < data.length; i++) {
-            var str1="/assets/pictures/";
-            var str2=data[i].thumbnailFilename;
-            var tmp = str1.concat(str2);
-            $(images[i]).attr("src", tmp);
-        }
-    }
+    <#--function onAjaxSuccess(data)-->
+    <#--{-->
+        <#--var images = $("img")-->
+        <#--for (var i = 0; i < data.length; i++) {-->
+            <#--var str1="/assets/pictures/";-->
+            <#--var str2=data[i].thumbnailFilename;-->
+            <#--var tmp = str1.concat(str2);-->
+            <#--$(images[i]).attr("src", tmp);-->
+        <#--}-->
+    <#--}-->
 
-    </#if>
+    <#--</#if>-->
 
     $("#sub").click(function () {
         $("#roomForm").submit();
@@ -308,14 +312,12 @@
 <script>
     $(function () {
         'use strict';
-
         // Initialize the jQuery File Upload widget:
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: 'upload'
+            url: '/room/upload'
         });
-
         // Enable iframe cross-domain access via redirect option:
     });
 </script>
