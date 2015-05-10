@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
-Built-By: Green-L
+Built-By: andrey
 Created-By: IntelliJ IDEA
+<<<<<<< Updated upstream
 Build-Jdk: 1.7.0_45
+=======
+Build-Jdk: 1.7.0_51
+Main-Class: ${start-class}
+>>>>>>> Stashed changes
 

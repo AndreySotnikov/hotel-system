@@ -45,6 +45,7 @@ public class RestTimeTableController {
 
     @RequestMapping("inventory")
     public int[] getInventory(@RequestParam("id") int id){
+
         int[] inv = timeTableService.getInventory(id);
         return inv;
     }

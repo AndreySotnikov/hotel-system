@@ -87,7 +87,7 @@
 
 <script>
 
-    var i = 0;
+    var i = ${valueList?size}-1;
 
     $("select").change(function () {
         var inputs = document.getElementsByTagName('select');
@@ -167,7 +167,7 @@
         $("p").before(
                 '<div class="form-group">' +
                 '<div class="col-xs-4">' +
-                '<select id="selectCharacteristic' + i + '" class="form-control" name="characteristic' + i + '">' +
+                '<select id="selectType' + i + '" class="form-control" name="characteristic' + i + '">' +
                         '<#list characteristicList as characteristic>'+
                 '<option value="${characteristic.characteristicId}">${characteristic.name}</option>'+
                         '</#list>' +
@@ -179,7 +179,7 @@
                 '</div>' +
                 '</div>');
 
-        $(document).on('change', 'select[name=characteristic' + i + ']', function () {
+        $(document).on('change', 'select[id=selectType' + i + ']', function () {
             var inputs = document.getElementsByTagName('select');
             for (var k = 0; k < inputs.length; ++k) {
                 var e = inputs[k];
@@ -212,12 +212,12 @@
                             .done(function (id) {
                                 charId = parseInt(id);
 
-                                $('#selectCharacteristic' + j + ' option[value=' + 0 + ']').remove();
-                                $('#selectCharacteristic' + j).append($('<option>', {
+                                $('#selectType' + j + ' option[value=' + 0 + ']').remove();
+                                $('#selectType' + j).append($('<option>', {
                                     value: charId,
                                     text: input.value
                                 }));
-                                $('#selectCharacteristic' + j).append($('<option>', {
+                                $('#selectType' + j).append($('<option>', {
                                     value: 0,
                                     text: "Добавить характеристику"
                                 }));
