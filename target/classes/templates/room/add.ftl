@@ -131,6 +131,7 @@
                 <b>Добавить номер</b>
             </#if>
             </div>
+            <p></p>
             <!-- dialog buttons -->
             <form id="roomForm" method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>"
                   name="room">
@@ -153,7 +154,7 @@
                         </div>
                         <div class="col-xs-8">
                             <input type="text" class="form-control" name="number"
-                                   <#if room?? && room.number??>value="${room.number}"</#if> pattern="\d*">
+                                   <#if room?? && room.number??>value="${room.number}"</#if> >
                         </div>
                     </div>
                 <#--</div>-->
@@ -228,7 +229,7 @@
                 </table>
             </form>
             </div>
-            <input id="sub" class="btn btn-primary" type="submit" value="Submit">
+            <input id="sub" class="btn btn-primary" type="button" value="Submit">
         </div>
     </div>
 </div>
@@ -236,30 +237,41 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
-    <#--<#if room?? && room.roomId??>-->
-    <#--$(document).ready(function(){-->
-        <#--$.get(-->
-                <#--"/room/${room.roomId}/getpic",-->
-                <#--onAjaxSuccess-->
-        <#--);-->
-    <#--});-->
 
+    function validation(txt){
+        if (/[а-яА-ЯёЁa-zA-Z0-9]{1,}/.test(txt))
+            $('#sub').prop( "disabled", false);
+        else
+            $('#sub').prop( "disabled", true);
+    }
 
-    <#--function onAjaxSuccess(data)-->
-    <#--{-->
-        <#--var images = $("img")-->
-        <#--for (var i = 0; i < data.length; i++) {-->
-            <#--var str1="/assets/pictures/";-->
-            <#--var str2=data[i].thumbnailFilename;-->
-            <#--var tmp = str1.concat(str2);-->
-            <#--$(images[i]).attr("src", tmp);-->
-        <#--}-->
-    <#--}-->
+    function validationDigital(txt){
+        if (/[0-9]{1,}/.test(txt))
+            $('#sub').prop( "disabled", false);
+        else
+            $('#sub').prop( "disabled", true);
+    }
 
-    <#--</#if>-->
 
     $("#sub").click(function () {
-        $("#roomForm").submit();
+        $("div[name=alert]").remove();
+        var ok=true;
+        var floor = $("input[name=floor]");
+        var number = $("input[name=number]");
+        if (/[0-9]{1,}/.test(floor.val()))
+            ok=true;
+        else{
+            ok = false;
+            $("p").before('<div name="alert" class="alert alert-danger" role="alert">Неверный этаж</div>');
+        }
+        if (/[0-9]{1,}/.test(number.val()))
+            ok=ok && true;
+        else{
+            ok = false;
+            $("p").before('<div name="alert" class="alert alert-danger" role="alert">Неверный номер</div>');
+        }
+        if (ok)
+            $("#roomForm").submit();
     });
 
     $("#selectType").val(<#if room?? && room.roomId??>"${room.roomType.roomTypeId}"<#else>"1"</#if>)

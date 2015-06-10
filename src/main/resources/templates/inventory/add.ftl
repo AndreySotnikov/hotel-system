@@ -49,7 +49,7 @@
                         <label >Название</label>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="name" <#if inventory?? && inventory.name??>value="${inventory.name}"></#if>
+                        <input type="text" class="form-control" name="name" onchange="validation(this.value)" " <#if inventory?? && inventory.name??>value="${inventory.name}"></#if>
                     </div>
                 </div>
                 <input id="sub" class="btn btn-primary" type="submit" value="Submit">
@@ -62,6 +62,13 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+    function validation(txt){
+        if (/[а-яА-ЯёЁa-zA-Z0-9]{1,}/.test(txt))
+            $('#sub').prop( "disabled", false);
+        else
+            $('#sub').prop( "disabled", true);
+    }
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {

@@ -13,8 +13,6 @@
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />
-
-
 <style>
     label {
         display: block;
@@ -186,7 +184,7 @@
 
                 </div>
 
-                <input id="sub" class="btn btn-primary" type="submit" value="Submit">
+                <input id="sub" class="btn btn-primary" type="button" value="Submit">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
 
@@ -209,6 +207,74 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+
+
+    function TimeTable(room,from,to,state) {
+
+        function Room(id,type,floor,number){
+            this.id = id
+            this.type = type
+            this.floor = floor
+            this.number = number
+        };
+
+        this.room = new Room(room.roomId, room.roomType.name, room.floor, room.number)
+        this.from =from
+        this.to = to
+        this.state = state
+    };
+
+    function getInfo(){
+        var result=null;
+        $.get("/rest-time-table/room/${room.roomId}")
+                .done(function( data ) {
+                    result =  onAjaxSuccess(data);
+                });
+        return result;
+        <#--$.get(-->
+                <#--"/rest-time-table/room/${room.roomId}",-->
+                <#--onAjaxSuccess-->
+        <#--);-->
+
+    };
+
+    function onAjaxSuccess(data)
+    {
+        var timetablelist = [];
+        var timetable;
+        for(var i = 0; i < data.length; i++){
+            timetable = new TimeTable(data[i].room,data[i].from,data[i].to,data[i].roomState.name);
+            timetablelist.push(timetable);
+        }
+        return timetablelist;
+        //alert(data.length);
+    }
+
+    $("#sub").click(function(){
+        var timetablelist =  getInfo();
+        var daterange = $('input[name="daterange"]');
+        var value = daterange.val();
+        var dt = value.split(' - ');
+        var from = dt[0].split('/');
+        var date = new Date();
+        date.setFullYear(parseInt(from[2]),parseInt(from[0]),parseInt(from[1]));
+        var lfrom = date.getTime();
+        var to = dt[1].split('/');
+        date.setFullYear(parseInt(to[2]),parseInt(to[0]),parseInt(to[1]));
+        var lto = date.getTime();
+        var elem;
+        var OK = true;
+        for (var i = 0; i < timetablelist.length && OK; i++){
+            elem = timetablelist[i];
+            if ((lto >= elem.from) && (lfrom <= elem.to))
+                OK = false;
+        }
+        if (OK)
+            $('form[name="room"]').submit();
+        else
+            alert('Выберите другие даты');
+    });
 
     function curDate(){
         var e = document.getElementById('range');

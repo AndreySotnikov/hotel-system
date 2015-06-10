@@ -76,6 +76,7 @@ public class TimeTableController {
         TimeTable timeTable = timeTableService.getOne(ttId);
         modelMap.addAttribute("timetableId",ttId);
 //        modelMap.addAttribute("room", roomService.getOne(roomId));
+        modelMap.addAttribute("inventoryList", inventoryService.getAll(tenantId));
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
         modelMap.addAttribute("state", timeTable.getRoomState().getRoomStateId());
         modelMap.addAttribute("tenantId",tenantId);
@@ -183,12 +184,20 @@ public class TimeTableController {
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable("id") Integer id, ModelMap modelMap){
-        List<TimeTable> timeTableList = timeTableService.getAllByRoom(id);
+    public String show(@PathVariable("id") Integer id, ModelMap modelMap, Principal principal){
+        if (tenantId == 0)
+            tenantId = usersRepository.getTenantId(principal.getName());
+        List<TimeTable> timeTableList = timeTableService.getAllByRoom(id,tenantId);
         List<TimetableDto> timetableDtoList = new ArrayList<TimetableDto>();
         for(TimeTable timeTable : timeTableList)
             timetableDtoList.add(new TimetableDto(timeTable));
         modelMap.addAttribute("timetableList",timetableDtoList);
         return "timetable/show";
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Integer id){
+        timeTableService.delete(id);
+        return "redirect:/timetable/all";
     }
 }

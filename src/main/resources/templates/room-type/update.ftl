@@ -29,6 +29,11 @@
         margin-left: auto;
     }
 
+    #plus{
+        position: relative;
+        bottom: 15px;
+    }
+
 </style>
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
@@ -51,7 +56,7 @@
                                 <label>Название</label>
                             </div>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="name" value="${roomType.name}">
+                                <input type="text" class="form-control" name="name" value="${roomType.name}" onchange="validation(this.value)">
                             </div>
 
                         </div>
@@ -89,6 +94,13 @@
 
     var i = ${valueList?size}-1;
 
+    function validation(txt){
+        if (/[а-яА-ЯёЁa-zA-Z0-9]{1,}/.test(txt))
+            $('#sub').prop( "disabled", false);
+        else
+            $('#sub').prop( "disabled", true);
+    }
+
     $("select").change(function () {
         var inputs = document.getElementsByTagName('select');
         for (var k = 0; k < inputs.length; ++k) {
@@ -104,7 +116,7 @@
                     '<div class="col-xs-7">' +
                     '<input id="addchar" type="text" class="form-control" name="val">' +
                     '</div>' +
-                    '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику">' +
+                    '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику" onchange="validation(this.value)">' +
                     '</div>'
             );
 
@@ -131,8 +143,6 @@
                             }));
                             $("#mod-form").remove();
                         });
-
-
             });
 
         }
@@ -175,7 +185,7 @@
                 '</select>' +
                 '</div>' +
                 '<div class="col-xs-8">' +
-                '<input type="text" class="form-control" name="val">' +
+                '<input type="text" class="form-control" name="val" onchange="validation(this.value)">' +
                 '</div>' +
                 '</div>');
 

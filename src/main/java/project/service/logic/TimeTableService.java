@@ -51,8 +51,8 @@ public class TimeTableService {
         return ttRep.save(updTimeTable);
     }
 
-    public List<TimeTable> getAllByRoom(int roomId){
-        return ttRep.findAllByRoom(roomId);
+    public List<TimeTable> getAllByRoom(int roomId, int tenantId){
+        return ttRep.findAllByRoom(roomId, tenantId);
     }
 
     public int[] getInventory(int id){

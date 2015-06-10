@@ -29,6 +29,11 @@
         margin-left: auto;
     }
 
+    #plus{
+        position: relative;
+        bottom: 15px;
+    }
+
 </style>
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
@@ -51,8 +56,8 @@
                             <label>Название</label>
                         </div>
                         <div class="col-xs-7">
-                        <input type="text" class="form-control" name="name"
-                               <#if roomType?? && roomType.name??>value="${roomType.name}"></#if>
+                        <input type="text" class="form-control" name="name" onchange="validation(this.value)"
+                               <#if roomType?? && roomType.name??>value="${roomType.name}"</#if> >
                         </div>
 
                     </div>
@@ -74,6 +79,13 @@
 <script>
 
     var i = 0;
+
+    function validation(txt){
+        if (/[а-яА-ЯёЁa-zA-Z0-9]{1,}/.test(txt))
+            $('#sub').prop( "disabled", false);
+        else
+            $('#sub').prop( "disabled", true);
+    }
 
     $("#sub").click(function () {
         var inp = [];
@@ -111,7 +123,7 @@
                 '</select>'+
                 '</div>'+
                 '<div class="col-xs-8">'+
-                '<input type="text" class="form-control" name="val">'+
+                '<input type="text" class="form-control" name="val" onchange="validation(this.value)">'+
                 '</div>'+
                 '</div>');
 
@@ -129,7 +141,7 @@
                     $("form").after(
                             '<div id="mod-form" class="modal-footer">' +
                             '<div class="col-xs-7">' +
-                            '<input id="addchar" type="text" class="form-control" name="val">' +
+                            '<input id="addchar" type="text" class="form-control" name="val" onchange="validation(this.value)">' +
                             '</div>' +
                             '<input id="modal-form-submit" class="btn btn-primary"  type="button" value="Добавить характеристику">' +
                             '</div>'

@@ -2,6 +2,7 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,14 @@ public class RestTimeTableController {
         if (tenantId == 0)
             tenantId = usersRepository.getTenantId(principal.getName());
         return timeTableService.getAll(tenantId);
+    }
+
+    @RequestMapping("/room/{id}")
+    public List<TimeTable> one(@PathVariable("id") int id, Principal principal){
+        if (tenantId == 0)
+            tenantId = usersRepository.getTenantId(principal.getName());
+        List<TimeTable> lst = timeTableService.getAllByRoom(id, tenantId);
+        return lst;
     }
 
     @RequestMapping("/one")

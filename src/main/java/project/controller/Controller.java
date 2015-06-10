@@ -95,6 +95,6 @@ public class Controller {
 
     @RequestMapping("/administration")
     public String administration(){
-        return "administration";
+        return "redirect:/room/all";
     }
 }

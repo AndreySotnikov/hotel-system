@@ -177,6 +177,9 @@
 <!-- sometime later, probably inside your on load event callback -->
 <script>
 
+    $(function() {
+        $('input[name="daterange"]').daterangepicker();
+    });
 
     $.get(
             "/rest-time-table/inventory?id=${id}",

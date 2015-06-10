@@ -112,25 +112,11 @@
         var d =nowDay.getTime();
 
         var timetable;
-//        $.get( "/timetable/update", { id: roomId, time: d } );
         window.location.replace("/timetable/update?id="+roomId+"&time="+d);
-
-//                .done(function( data ) {
-//                    var timetable = new TimeTable(data.room,data.from,data.to,data.roomState.name);
-//
-//                });
     };
 
 
     function getInfo(){
-//        $.get( "/rest-time-table/all", function( data ) {
-//
-//            var timetable;
-//            for(var i = 0; i < data.length; i++){
-//                timetable = new TimeTable(data[i].room,data[i].from,data[i].to,data[i].roomState.name);
-//                timetablelist.push(timetable);
-//            }
-//        });
         $.get(
                 "/rest-time-table/all",
                 onAjaxSuccess
