@@ -14,7 +14,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 </head>
+<style>
+    label{
+        position: relative;
+        top: 5px;
+    }
+
+</style>
 <body>
+<style>
+    li#profile {
+        display: block;
+        margin-bottom: 15px;
+        margin-right: 15px;
+        margin-left: auto;
+    }
+</style>
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -29,8 +44,9 @@
                 <#--<li><a href="/room-type/all">Типы номеров</a></li>-->
                 <li><a href="/timetable/all">Состояние</a></li>
                 <#--<li><a href="/inventory/all">Сервисы</a></li>-->
-                <li><a href="/administration">Администрирование</li>
+                <li><a href="/administration">Администрирование</a></li>
             </ul>
+            <p class="navbar-text navbar-right"><a href="/profile" class="navbar-link">Профиль</a></p>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

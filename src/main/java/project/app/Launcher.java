@@ -95,10 +95,10 @@ public class Launcher {
         inventoryRepository.save(new Inventory("Inv3",1));
 
 
-        Characteristic cr1 = new Characteristic("wi-fi",1);
-        Characteristic cr2 = new Characteristic("price",1);
-        Characteristic cr3 = new Characteristic("beds",1);
-        Characteristic cr4 = new Characteristic("guests",1);
+        Characteristic cr1 = new Characteristic("wi-fi",0);
+        Characteristic cr2 = new Characteristic("price",0);
+        Characteristic cr3 = new Characteristic("beds",0);
+        Characteristic cr4 = new Characteristic("guests",0);
 
         Attribute at1 = new Attribute(1,1,"yes",1);
         Attribute at2 = new Attribute(1,2,"300",1);

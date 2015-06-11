@@ -14,6 +14,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 </head>
+<style>
+    label{
+        position: relative;
+        top: 5px;
+    }
+</style>
 <body>
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">

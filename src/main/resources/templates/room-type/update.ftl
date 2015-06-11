@@ -29,9 +29,10 @@
         margin-left: auto;
     }
 
-    #plus{
+    #plus {
         position: relative;
         bottom: 15px;
+        right: 7px;
     }
 
 </style>
@@ -50,21 +51,22 @@
                   action="/room-type/update/${roomType.roomTypeId}"
                   name="roomType">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-xs-4">
-                                <label>Название</label>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="text" class="form-control" name="name" value="${roomType.name}" onchange="validation(this.value)">
-                            </div>
-
+                <#--<div class="row">-->
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <label>Название</label>
+                        </div>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" name="name" value="${roomType.name}"
+                                   onchange="validation(this.value)">
                         </div>
 
-                        <button id="plus" type="button" class="btn btn-default" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        </button>
                     </div>
+
+                    <button id="plus" type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                <#--</div>-->
                 <#list valueList as value>
                     <div class="form-group">
                         <div class="col-xs-4">
@@ -81,10 +83,9 @@
                     </div>
                 </#list>
                     <p></p>
+                    <input id="sub" class="btn btn-primary" type="button" value="OK">
+                    <input type="hidden" name="tenantId" value="${tenantId}">
                 </div>
-
-                <input id="sub" class="btn btn-primary" type="button" value="Submit">
-                <input type="hidden" name="tenantId" value="${tenantId}">
             </form>
         </div>
     </div>
@@ -94,11 +95,11 @@
 
     var i = ${valueList?size}-1;
 
-    function validation(txt){
+    function validation(txt) {
         if (/[а-яА-ЯёЁa-zA-Z0-9]{1,}/.test(txt))
-            $('#sub').prop( "disabled", false);
+            $('#sub').prop("disabled", false);
         else
-            $('#sub').prop( "disabled", true);
+            $('#sub').prop("disabled", true);
     }
 
     $("select").change(function () {
@@ -245,9 +246,9 @@
     $("#plus").click(startFunc);
 
 
-    $("#myModal").ready(function(){
+    $("#myModal").ready(function () {
     <#list charList as charId>
-            $("#selectType"+${charId_index}).val(${charId});
+        $("#selectType" +${charId_index}).val(${charId});
     </#list>
 
     });

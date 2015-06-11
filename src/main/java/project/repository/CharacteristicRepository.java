@@ -11,7 +11,7 @@ import java.util.List;
  * Created by andrey on 01.04.15.
  */
 public interface CharacteristicRepository extends CrudRepository<Characteristic,Integer>{
-    @Query("select c from Characteristic c where c.tenantId=:tenantId")
+    @Query("select c from Characteristic c where c.tenantId=:tenantId or c.tenantId=0")
     public List<Characteristic> findAll(@Param("tenantId")int tenantId);
 
     @Query("select c.characteristicId from Characteristic c where c.tenantId=:tenantId and c.name=:name")

@@ -32,6 +32,7 @@
     #plus{
         position: relative;
         bottom: 15px;
+        right: 7px;
     }
 
 </style>
@@ -50,7 +51,7 @@
                   action="<#if roomType?? && roomType.roomTypeId??>/room-type/update/${roomType.roomTypeId}<#else>/room-type/add</#if>"
                   name="roomType">
                 <div class="container-fluid">
-                <div class="row">
+                <#--<div class="row">-->
                     <div class="form-group">
                         <div class="col-xs-4">
                             <label>Название</label>
@@ -65,7 +66,7 @@
                         <button id="plus" type="button" class="btn btn-default" aria-label="Left Align">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </button>
-                </div>
+                <#--</div>-->
                     <p></p>
                 </div>
 

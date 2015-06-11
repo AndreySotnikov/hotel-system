@@ -84,7 +84,10 @@ public class Controller {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@RequestParam("username") String username, @RequestParam("password") String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public String register(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam(value = "email",required = false) String email,
+                           @RequestParam(value = "hotelname",required = false) String hotelname) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         Users user = new Users(username,encryptPassword.encrypt(password),1);
         usersService.add(user);
