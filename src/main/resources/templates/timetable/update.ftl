@@ -121,52 +121,9 @@
                             </div>
                         </div>
                     </div>
-                    <#--<input type="text" name="daterange" value="${date}" />-->
-
-                    <#--<script type="text/javascript">-->
-                        <#--$(function() {-->
-                            <#--$('input[name="daterange"]').daterangepicker();-->
-                        <#--});-->
-                    <#--</script>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Статус</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<select id="selectState" class="form-control" name="stateId">-->
-                            <#--<#list stateList as state>-->
-                                <#--<option value="${state.roomStateId}">${state.name}</option>-->
-                            <#--</#list>-->
-                            <#--</select>-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >ФИО</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="fio" value="${guest.fio}" >-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >E-mail</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="email" value="${guest.email}">-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Телефон</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="phone"  value="${guest.phone}">-->
-                        <#--</div>-->
-                    <#--</div>-->
                 </div>
 
-                <input id="sub" class="btn btn-primary" type="submit" value="OK">
+                <input id="sub" class="btn btn-primary" type="button" value="OK">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
                 <input id="hid" type="hidden" name="timetableId" value="${timetableId}">
             </form>
@@ -176,6 +133,23 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+    var oldfrom, oldto;
+
+    function TimeTable(room,from,to,state) {
+
+        function Room(id,type,floor,number){
+            this.id = id
+            this.type = type
+            this.floor = floor
+            this.number = number
+        };
+
+        this.room = new Room(room.roomId, room.roomType.name, room.floor, room.number)
+        this.from =from
+        this.to = to
+        this.state = state
+    };
 
     $(function() {
         $('input[name="daterange"]').daterangepicker();
@@ -192,7 +166,68 @@
         });
     }
 
+    function check(){
+        $.get(
+                "/rest-time-table/room/${roomId}",
+                onAjaxSuccess2
+        );
+
+    };
+
+    function onAjaxSuccess2(data)
+    {
+        var timetablelist = [];
+        var timetable;
+        for(var i = 0; i < data.length; i++){
+            timetable = new TimeTable(data[i].room,data[i].from,data[i].to,data[i].roomState.name);
+            timetablelist.push(timetable);
+        }
+        var daterange = $('input[name="daterange"]');
+        var value = daterange.val();
+        var dt = value.split(' - ');
+        var from = dt[0].split('/');
+        var date = new Date(0, 0);
+        date.setFullYear(parseInt(from[2]),parseInt(from[0]-1),parseInt(from[1]));
+        var lfrom = date.getTime();
+        var to = dt[1].split('/');
+        date.setFullYear(parseInt(to[2]),parseInt(to[0]-1),parseInt(to[1]));
+        var lto = date.getTime();
+        var elem;
+        var OK = true;
+        for (var i = 0; i < timetablelist.length && OK; i++){
+            elem = timetablelist[i];
+            if ((oldfrom==elem.from) && (oldto==elem.to))
+                continue;
+            OK = ((lto < elem.from) || (lfrom > elem.to));
+        }
+        if (OK)
+            $('form[name="room"]').submit();
+        else
+            alert('Выберите другие даты');
+    }
+
+    $("#sub").click(function(){
+        check();
+    });
+
     $("#selectState").val(${state});
+
+    function savedates(){
+        var daterange = $('input[name="daterange"]');
+        var value = daterange.val();
+        var dt = value.split(' - ');
+        var from = dt[0].split('/');
+        var date = new Date(0, 0);
+        date.setFullYear(parseInt(from[2]),parseInt(from[0]-1),parseInt(from[1]));
+        oldfrom = date.getTime();
+        var to = dt[1].split('/');
+        date.setFullYear(parseInt(to[2]),parseInt(to[0]-1),parseInt(to[1]));
+        oldto = date.getTime();
+    }
+
+    $(document).ready(function(){
+        savedates();
+    });
 
     $("#myModal").on("show", function() { // wire up the OK button to dismiss the modal when shown
         $("#myModal a.btn").on("click", function(e) {

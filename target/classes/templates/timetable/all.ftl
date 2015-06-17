@@ -225,8 +225,6 @@
 
     $(document).ready(function(){
         emptyTable();
-        //getInfo();
-        //fillTable();
     });
 </script>
 

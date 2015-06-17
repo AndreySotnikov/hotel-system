@@ -43,66 +43,6 @@
                 <button id="closebtn" type="button" class="close" data-dismiss="modal">&times;</button>
                 <b>Добавить ${room.roomType.name} номер</b>
             </div>
-            <!-- dialog buttons -->
-            <#--<form method="post" action="/timetable/add/${room.roomId}" name="room">-->
-                <#--<div class="container-fluid">-->
-
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Дата</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" id="range" name="daterange" />-->
-                        <#--</div>-->
-                    <#--</div>-->
-
-                    <#--<script type="text/javascript">-->
-                        <#--$(function() {-->
-                            <#--$('input[name="daterange"]').daterangepicker();-->
-                        <#--});-->
-                    <#--</script>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Статус</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<select id="selectState" class="form-control" name="stateId">-->
-                            <#--<#list stateList as state>-->
-                                <#--<option value="${state.roomStateId}">${state.name}</option>-->
-                            <#--</#list>-->
-                            <#--</select>-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >ФИО</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="fio" >-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >E-mail</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="email" >-->
-                        <#--</div>-->
-                    <#--</div>-->
-                    <#--<div class="form-group">-->
-                        <#--<div class="col-xs-4">-->
-                            <#--<label >Телефон</label>-->
-                        <#--</div>-->
-                        <#--<div class="col-xs-8">-->
-                            <#--<input type="text" class="form-control" name="phone" >-->
-                        <#--</div>-->
-                    <#--</div>-->
-                <#--</div>-->
-
-                <#--<input id="sub" class="btn btn-primary" type="submit" value="Submit">-->
-                <#--<input id="hid" type="hidden" name="tenantId" value="${tenantId}">-->
-            <#--</form>-->
-
 
             <form method="post" action="/timetable/add/${room.roomId}" name="room">
                 <div class="container-fluid">
@@ -243,23 +183,17 @@
         var value = daterange.val();
         var dt = value.split(' - ');
         var from = dt[0].split('/');
-        var date = new Date();
-        date.setFullYear(parseInt(from[2]),parseInt(from[0]),parseInt(from[1]));
+        var date = new Date(0, 0);
+        date.setFullYear(parseInt(from[2]),parseInt(from[0]-1),parseInt(from[1]));
         var lfrom = date.getTime();
         var to = dt[1].split('/');
-        date.setFullYear(parseInt(to[2]),parseInt(to[0]),parseInt(to[1]));
+        date.setFullYear(parseInt(to[2]),parseInt(to[0]-1),parseInt(to[1]));
         var lto = date.getTime();
         var elem;
         var OK = true;
-        var e1, e2;
         for (var i = 0; i < timetablelist.length && OK; i++){
             elem = timetablelist[i];
-//            if ((lto >= elem.from) || (lfrom <= elem.to))
-//            e1 =(lto>=elem.from && lto<=elem.to);
-//            e2 =(lfrom>=elem.from && lfrom<=elem.to);
-            if (lto>=elem.from && lto<=elem.to)
-                ok = false;
-//            OK = !(e1||e2);
+            OK = ((lto < elem.from) || (lfrom > elem.to));
         }
         if (OK)
             $('form[name="room"]').submit();
@@ -268,8 +202,6 @@
     }
 
     $("#sub").click(function(){
-        //$('form[name="room"]').submit();
-//        timetablelist = [];
         getInfo();
 
     });
