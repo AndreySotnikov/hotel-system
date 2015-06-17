@@ -41,6 +41,7 @@ public class RestTimeTableController {
         if (tenantId == 0)
             tenantId = usersRepository.getTenantId(principal.getName());
         List<TimeTable> lst = timeTableService.getAllByRoom(id, tenantId);
+        System.err.println(lst);
         return lst;
     }
 

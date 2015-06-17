@@ -46,7 +46,7 @@
                 <#--<li><a href="/inventory/all">Сервисы</a></li>-->
                 <li><a href="/administration">Администрирование</a></li>
             </ul>
-            <p class="navbar-text navbar-right"><a href="/profile" class="navbar-link">Профиль</a></p>
+            <#--<p class="navbar-text navbar-right"><a href="/profile" class="navbar-link">Профиль</a></p>-->
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

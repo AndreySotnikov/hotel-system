@@ -208,7 +208,7 @@
 <!-- sometime later, probably inside your on load event callback -->
 <script>
 
-
+    var timetablelist = [];
 
     function TimeTable(room,from,to,state) {
 
@@ -226,33 +226,27 @@
     };
 
     function getInfo(){
-        var result=null;
-        $.get("/rest-time-table/room/${room.roomId}")
-                .done(function( data ) {
-                    result =  onAjaxSuccess(data);
-                });
-        return result;
-        <#--$.get(-->
-                <#--"/rest-time-table/room/${room.roomId}",-->
-                <#--onAjaxSuccess-->
-        <#--);-->
+        $.get(
+                "/rest-time-table/room/${room.roomId}",
+                onAjaxSuccess
+        );
 
     };
 
     function onAjaxSuccess(data)
     {
-        var timetablelist = [];
         var timetable;
         for(var i = 0; i < data.length; i++){
             timetable = new TimeTable(data[i].room,data[i].from,data[i].to,data[i].roomState.name);
             timetablelist.push(timetable);
         }
-        return timetablelist;
-        //alert(data.length);
+        alert(timetablelist.length);
     }
 
     $("#sub").click(function(){
-        var timetablelist =  getInfo();
+        //$('form[name="room"]').submit();
+        timetablelist = [];
+        getInfo();
         var daterange = $('input[name="daterange"]');
         var value = daterange.val();
         var dt = value.split(' - ');
