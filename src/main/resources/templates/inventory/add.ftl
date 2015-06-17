@@ -52,7 +52,7 @@
                         <input type="text" class="form-control" name="name" onchange="validation(this.value)" " <#if inventory?? && inventory.name??>value="${inventory.name}"></#if>
                     </div>
                 </div>
-                <input id="sub" class="btn btn-primary" type="submit" value="Submit">
+                <input id="sub" class="btn btn-primary" type="submit" value="OK">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
             <#--<div class="modal-footer"><button type="button" class="btn btn-primary">OK</button></div>-->

@@ -184,7 +184,7 @@
 
                 </div>
 
-                <input id="sub" class="btn btn-primary" type="button" value="Submit">
+                <input id="sub" class="btn btn-primary" type="button" value="OK">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
             </form>
 
@@ -208,9 +208,7 @@
 <!-- sometime later, probably inside your on load event callback -->
 <script>
 
-    var timetablelist = [];
-
-    function TimeTable(room,from,to,state) {
+   function TimeTable(room,from,to,state) {
 
         function Room(id,type,floor,number){
             this.id = id
@@ -235,18 +233,12 @@
 
     function onAjaxSuccess(data)
     {
+        var timetablelist = [];
         var timetable;
         for(var i = 0; i < data.length; i++){
             timetable = new TimeTable(data[i].room,data[i].from,data[i].to,data[i].roomState.name);
             timetablelist.push(timetable);
         }
-        alert(timetablelist.length);
-    }
-
-    $("#sub").click(function(){
-        //$('form[name="room"]').submit();
-        timetablelist = [];
-        getInfo();
         var daterange = $('input[name="daterange"]');
         var value = daterange.val();
         var dt = value.split(' - ');
@@ -259,15 +251,27 @@
         var lto = date.getTime();
         var elem;
         var OK = true;
+        var e1, e2;
         for (var i = 0; i < timetablelist.length && OK; i++){
             elem = timetablelist[i];
-            if ((lto >= elem.from) && (lfrom <= elem.to))
-                OK = false;
+//            if ((lto >= elem.from) || (lfrom <= elem.to))
+//            e1 =(lto>=elem.from && lto<=elem.to);
+//            e2 =(lfrom>=elem.from && lfrom<=elem.to);
+            if (lto>=elem.from && lto<=elem.to)
+                ok = false;
+//            OK = !(e1||e2);
         }
         if (OK)
             $('form[name="room"]').submit();
         else
             alert('Выберите другие даты');
+    }
+
+    $("#sub").click(function(){
+        //$('form[name="room"]').submit();
+//        timetablelist = [];
+        getInfo();
+
     });
 
     function curDate(){

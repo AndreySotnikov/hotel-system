@@ -37,6 +37,7 @@
             <b>Список броней</b>
             </div>
             <!-- dialog buttons -->
+            <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <table class="table table-striped">
@@ -59,6 +60,7 @@
                     </#list>
                     </table>
                 </div>
+            </div>
             </div>
         <#--<div class="modal-footer"><button type="button" class="btn btn-primary">OK</button></div>-->
         </div>

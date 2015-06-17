@@ -70,7 +70,7 @@
                     <p></p>
                 </div>
 
-                <input id="sub" class="btn btn-primary"  type="button" value="Submit">
+                <input id="sub" class="btn btn-primary"  type="button" value="OK">
                 <input type="hidden" name="tenantId" value="${tenantId}">
             </form>
         </div>

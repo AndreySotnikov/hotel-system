@@ -166,7 +166,7 @@
                     <#--</div>-->
                 </div>
 
-                <input id="sub" class="btn btn-primary" type="submit" value="Submit">
+                <input id="sub" class="btn btn-primary" type="submit" value="OK">
                 <input id="hid" type="hidden" name="tenantId" value="${tenantId}">
                 <input id="hid" type="hidden" name="timetableId" value="${timetableId}">
             </form>

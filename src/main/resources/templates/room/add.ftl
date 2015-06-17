@@ -196,20 +196,20 @@
                         <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>Add files...</span>
+                    <span>Добавить</span>
                     <input type="file" name="files[]" multiple>
                 </span>
                 <button type="submit" class="btn btn-primary start">
                     <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start</span>
+                    <span>Загрузить</span>
                 </button>
                 <button type="reset" class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
+                    <span>Отмена</span>
                 </button>
                 <button type="button" class="btn btn-danger delete">
                     <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
+                    <span>Удалить</span>
                 </button>
                 </div>
                     <!-- The global progress state -->
@@ -229,7 +229,7 @@
                 </table>
             </form>
             </div>
-            <input id="sub" class="btn btn-primary" type="button" value="Submit">
+            <input id="sub" class="btn btn-primary" type="button" value="OK">
         </div>
     </div>
 </div>
