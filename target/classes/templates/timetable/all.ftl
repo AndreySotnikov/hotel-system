@@ -172,16 +172,15 @@
 
             var ourtr = document.getElementById(elem.room.id);
             var array = ourtr.children;
+            var value;
+            if (elem.state=="Занято")
+                value="busy";
+            if (elem.state=="Оплачено")
+                value="sold";
+            if (elem.state=="Бронь")
+                value="booked";
             for (var j = leftIndex; j<rightIndex; j++){
-                if (elem.state=="Занято")
-                    $(array[j+1]).attr("name","busy");
-                    //array[j+1].setAttribute("name","busy");
-                if (elem.state=="Оплачено")
-                    $(array[j+1]).attr("name","sold");
-                    //array[j+1].setAttribute("name","sold");
-                if (elem.state=="Бронь")
-                    $(array[j+1]).attr("name","booked");
-                    //array[j+1].setAttribute("name","booked");
+                $(array[j+1]).attr("name", value);
             }
         }
     };
@@ -215,13 +214,14 @@
         <#list roomList as room>
             $("table").append('<tr id=${room.roomId}></tr>');
             var elem = document.getElementsByTagName('table').lastChild;
-            $("table tr:last").append('<td id="roomname"><div><a href=/timetable/show/${room.roomId}>${room.roomId} ${room.roomType.name}</a></div></td>');
+            $("table tr:last").append('<td id="roomname"><div><a href=/timetable/show/${room.roomId}>${room.roomType.name}</a></div></td>');
             for (var j = 0; j < ${count}; j++) {
                 $("table tr:last").append('<td id="${room.roomId}-'+j+'" onclick="test(this.id)"><div> </div></td>');
             }
         </#list>
         getInfo();
     };
+
 
     $(document).ready(function(){
         emptyTable();

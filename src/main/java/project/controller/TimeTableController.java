@@ -80,6 +80,7 @@ public class TimeTableController {
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
         modelMap.addAttribute("state", timeTable.getRoomState().getRoomStateId());
         modelMap.addAttribute("tenantId",tenantId);
+        modelMap.addAttribute("roomId", timeTable.getRoom().getRoomId());
         modelMap.addAttribute("guest",timeTable.getGuest());
         Date from_d = new Date(timeTable.getFrom());
         Date to_d = new Date(timeTable.getTo());

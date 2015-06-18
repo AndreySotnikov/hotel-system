@@ -6,9 +6,10 @@
 </#if>
 <div class="col-sm-2">
     <nav class="navbar navbar-default" role="navigation" id="navig">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/administration">Администрирование</a>
-        </div>
+        <#--<div class="navbar-header">-->
+            <#--<a class="navbar-brand" href="/administration">Администрирование</a>-->
+        <#--</div>-->
+        <br>
         <div class="collapse navbar-collapse">
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="/room/all">Номера</a></li>
@@ -16,6 +17,7 @@
                 <li class="active"><a href="/inventory/all">Сервисы</a></li>
             </ul>
         </div>
+        <br>
     </nav>
 </div>
 <#--<h1>Все сервисы</h1>-->
