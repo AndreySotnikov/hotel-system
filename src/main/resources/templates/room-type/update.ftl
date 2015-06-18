@@ -199,7 +199,7 @@
             }
             var j = k;
             if (j < inputs.length) {
-                j++;
+                j+=2;
                 j = j - ${valueList?size};
 //                var e = document.getElementById('selectCharacteristic' + j);
                 $("form").after(
