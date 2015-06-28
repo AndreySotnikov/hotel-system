@@ -180,7 +180,7 @@
             if (elem.state=="Бронь")
                 value="booked";
             for (var j = leftIndex; j<rightIndex; j++){
-                $(array[j+1]).attr("name", value);
+                $(array[Math.round(j)+1]).attr("name", value);
             }
         }
     };

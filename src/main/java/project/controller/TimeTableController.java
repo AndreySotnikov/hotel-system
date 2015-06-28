@@ -21,10 +21,7 @@ import project.service.logic.RoomService;
 import project.service.logic.TimeTableService;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by andrey on 08.04.15.
@@ -166,7 +163,7 @@ public class TimeTableController {
                       @RequestParam("fio") String fio,
                       @RequestParam("email") String email,
                       @RequestParam("phone") String phone,
-                      @RequestParam("inventory") int[] inventory){
+                      @RequestParam(value = "inventory") int[] inventory){
 
         String[] splitStr = daterange.split(" - ");
         String[] array_from = splitStr[0].split("/");
@@ -177,10 +174,12 @@ public class TimeTableController {
         //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         TimeTable tt = new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,tenantId);
         tt.setGuest(guestService.add(new Guest(fio, phone, email, tenantId)));
-        List<Inventory> inventories=new ArrayList<Inventory>();
-        for (int i : inventory)
-            inventories.add(inventoryService.getOne(i));
-        tt.setInventories(inventories);
+        if (!Arrays.asList(inventory).contains(-1)) {
+            List<Inventory> inventories = new ArrayList<Inventory>();
+            for (int i : inventory)
+                inventories.add(inventoryService.getOne(i));
+            tt.setInventories(inventories);
+        }
         timeTableService.add(tt);
         return "redirect:/timetable/all";
     }

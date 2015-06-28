@@ -111,6 +111,7 @@
                                 </div>
                                 <div class="col-xs-8">
                                     <select id="inventory" class="form-control" name="inventory" multiple>
+                                        <option value="-1">нет</option>
                                     <#list inventoryList as inventory>
                                         <option value="${inventory.inventoryId}">${inventory.name}</option>
                                     </#list>
@@ -147,6 +148,8 @@
 
 <!-- sometime later, probably inside your on load event callback -->
 <script>
+
+    $("#inventory option[value='-1']").prop("selected", true);
 
    function TimeTable(room,from,to,state) {
 

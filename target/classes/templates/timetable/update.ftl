@@ -113,6 +113,7 @@
                                 </div>
                                 <div class="col-xs-8">
                                     <select id="inventory" class="form-control" name="inventory" multiple>
+                                        <option value="-1">нет</option>
                                     <#list inventoryList as inventory>
                                         <option value="${inventory.inventoryId}">${inventory.name}</option>
                                     </#list>
@@ -161,6 +162,8 @@
     );
 
     function onAjaxSuccess(data) {
+        if (data.length==0)
+            $("#inventory option[value='-1']").prop("selected", true);
         $.each(data, function (i, e) {
             $("#inventory option[value='" + e + "']").prop("selected", true);
         });

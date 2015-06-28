@@ -117,6 +117,10 @@
     img {
         padding: 10px;
     }
+    #images{
+        position: relative;
+        left: 15px;
+    }
 </style>
 <!-- set up the modal to start hidden and fade in and out -->
 <div id="myModal" class="modal fade">
@@ -131,11 +135,12 @@
                 <b>Добавить номер</b>
             </#if>
             </div>
-            <p></p>
+
             <!-- dialog buttons -->
             <form id="roomForm" method="post" action="<#if room?? && room.roomId??>/room/update/${room.roomId}<#else>/room/add</#if>"
                   name="room">
                 <div class="container-fluid">
+                    <p></p>
                 <#--<div class="row">-->
                     <div class="form-group">
                         <div class="col-xs-4">
@@ -171,7 +176,11 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="row">
+                    <div id="images" class="col-xs-4">
+                        <label>Фото номера</label>
+                    </div>
+                    </div>
                 <#--</div>-->
                 </div>
 
