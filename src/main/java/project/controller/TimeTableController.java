@@ -136,10 +136,14 @@ public class TimeTableController {
         timeTable.setTo(to);
         timeTable.setRoomState(roomStateRepository.findOne(stateId));
         guestService.update(timeTable.getGuest().getIdGuest(),fio, phone, email);
-        List<Inventory> inventories=new ArrayList<Inventory>();
-        for (int i : inventory)
-            inventories.add(inventoryService.getOne(i));
-        timeTable.setInventories(inventories);
+        Arrays.sort(inventory);
+        if (Arrays.binarySearch(inventory,-1)==-1) {
+            List<Inventory> inventories = new ArrayList<Inventory>();
+            for (int i : inventory)
+                inventories.add(inventoryService.getOne(i));
+            timeTable.setInventories(inventories);
+        }else
+            timeTable.setInventories(null);
         timeTableService.add(timeTable);
         //timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
         return "redirect:/timetable/all";
@@ -174,7 +178,8 @@ public class TimeTableController {
         //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
         TimeTable tt = new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,tenantId);
         tt.setGuest(guestService.add(new Guest(fio, phone, email, tenantId)));
-        if (!Arrays.asList(inventory).contains(-1)) {
+        Arrays.sort(inventory);
+        if (Arrays.binarySearch(inventory,-1)==-1) {
             List<Inventory> inventories = new ArrayList<Inventory>();
             for (int i : inventory)
                 inventories.add(inventoryService.getOne(i));

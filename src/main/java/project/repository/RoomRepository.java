@@ -16,4 +16,7 @@ public interface RoomRepository extends CrudRepository<Room,Integer> {
 
     @Query("select r from Room r where r.tenantId=:tenantId order by r.roomType.roomTypeId")
     public List<Room> findSortedAll(@Param("tenantId")int tenantId);
+
+    @Query(value = "select count(*) from Room", nativeQuery = true)
+    int size();
 }

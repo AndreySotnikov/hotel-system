@@ -14,4 +14,7 @@ public interface InventoryRepository extends CrudRepository<Inventory, Integer> 
 
     @Query("select i from Inventory i where i.tenantId=:tenantId")
     public List<Inventory> findAll(@Param("tenantId")int tenantId);
+
+    @Query("select i from Inventory i where i.name=:name")
+    public Inventory getByName(@Param("name")String name);
 }
