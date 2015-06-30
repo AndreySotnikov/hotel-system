@@ -59,13 +59,13 @@ public class AttributeService {
 
     @Transactional
     public Attribute updateAdd(int roomTypeId,int characteristicId, String value, int tenantId){
-        Attribute updAttribute = attributeRepository.findOne(roomTypeId,characteristicId);
-        if (updAttribute==null)
-            updAttribute = add(new Attribute(roomTypeId,characteristicId,value,tenantId));
-        else {
-            updAttribute.setValue(value);
-            updAttribute = add(updAttribute);
-        }
+//        Attribute updAttribute = attributeRepository.findOne(roomTypeId,characteristicId);
+//        if (updAttribute==null)
+         Attribute   updAttribute = add(new Attribute(roomTypeId,characteristicId,value,tenantId));
+//        else {
+//            updAttribute.setValue(value);
+//            updAttribute = add(updAttribute);
+//        }
         return updAttribute;
     }
 

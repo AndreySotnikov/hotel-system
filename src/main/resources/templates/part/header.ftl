@@ -15,6 +15,17 @@
 
 </head>
 <style>
+    body{
+        background-image: url("http://46.101.250.169/texture.jpg");
+        /*background-image:  url("http://3.bp.blogspot.com/-E0eLaR21IGQ/UyWcWVwaJOI/AAAAAAAAF8I/-sSqvX8WkGI/s1600/pale-green-web-texture.jpg");*/
+
+    }
+    .modal-content{
+        background-image: url("http://46.101.250.169/texture.jpg");
+    }
+    table{
+        background-color: #honeydew;
+    }
     label{
         position: relative;
         top: 5px;

@@ -10,24 +10,24 @@
 
 <style>
     #mytable{
-        background-color: #93a2ff;
+        background-color: honeydew;
     }
 
     #header{
-        background-color: aliceblue;
+        background-color: #cefffd;
     }
     #roomname{
-        background-color: #f1ffa3;
+        background-color: #fdf17c;
     }
 
     td[name=busy]{
-        background-color: coral;
+        background-color: #21d748;
     }
     td[name=booked]{
-        background-color: chartreuse;
+        background-color: #ef279a;
     }
     td[name=sold]{
-        background-color: darkcyan;
+        background-color: #3034d7;
     }
 
 
@@ -53,10 +53,8 @@
 
 </style>
 
-<table id="mytable" class="table table-bordered">
-
-</table>
-
+<table id="mytable" class="table table-bordered"></table>
+<img src="http://46.101.250.169/footer.jpg" height="46" width="360"/>
 
 <#--<button id="btn">111</button>-->
 

@@ -109,6 +109,7 @@ public class RoomTypeController {
         tenantId = Integer.parseInt(valueList[valueList.length-1]);
         RoomType roomType = roomTypeService.update(valueList[0], id);
         int roomTypeId = roomType.getRoomTypeId();
+        attributeService.deleteRoomType(roomTypeId);
         for (int i=0;i<charList.length;i++){
             attributeService.updateAdd(roomTypeId, Integer.parseInt(charList[i]), valueList[i + 1], tenantId);
         }

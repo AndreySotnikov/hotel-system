@@ -24,7 +24,7 @@
 <div class="container">
 <div class="row">
     <div class="col-sm-8">
-        <table class="table table-striped">
+        <table class="table table-condensed">
             <tr>
                 <th>ID</th>
                 <th>Название</th>
