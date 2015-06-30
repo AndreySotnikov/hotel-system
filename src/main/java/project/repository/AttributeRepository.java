@@ -27,5 +27,4 @@ public interface AttributeRepository extends CrudRepository<Attribute,Integer> {
     @Modifying
     @Query("delete from Attribute at where at.typeCharId.roomTypeId=:roomTypeId")
     public void deleteRoomType(@Param("roomTypeId") int roomTypeId);
-
 }

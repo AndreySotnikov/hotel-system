@@ -2,7 +2,6 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import project.entity.Guest;
 import project.entity.Inventory;
 import project.entity.TimeTable;
 import project.repository.RoomStateRepository;
-import project.repository.TimeTableRepository;
 import project.repository.UsersRepository;
 import project.service.logic.GuestService;
 import project.service.logic.InventoryService;
@@ -72,7 +70,6 @@ public class TimeTableController {
             tenantId = usersRepository.getTenantId(principal.getName());
         TimeTable timeTable = timeTableService.getOne(ttId);
         modelMap.addAttribute("timetableId",ttId);
-//        modelMap.addAttribute("room", roomService.getOne(roomId));
         modelMap.addAttribute("inventoryList", inventoryService.getAll(tenantId));
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
         modelMap.addAttribute("state", timeTable.getRoomState().getRoomStateId());
@@ -98,7 +95,6 @@ public class TimeTableController {
         if (timeTable==null)
             return "redirect:/timetable/add/"+roomId;
         modelMap.addAttribute("timetableId",timeTable.getTimeTableId());
-        //modelMap.addAttribute("room", roomService.getOne(roomId));
         modelMap.addAttribute("inventoryList", inventoryService.getAll(tenantId));
         modelMap.addAttribute("id",timeTable.getTimeTableId());
         modelMap.addAttribute("stateList", roomStateRepository.findAll());
@@ -115,8 +111,7 @@ public class TimeTableController {
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public String update(//@PathVariable("id") Integer id,
-                         @RequestParam("stateId") Integer stateId,
+    public String update(@RequestParam("stateId") Integer stateId,
                          @RequestParam("daterange") String daterange,
                          @RequestParam("fio") String fio,
                          @RequestParam("email") String email,
@@ -128,10 +123,14 @@ public class TimeTableController {
         TimeTable timeTable = timeTableService.getOne(timetableId);
         String[] array_from = splitStr[0].split("/");
         String[] array_to = splitStr[1].split("/");
-        Long from = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1])).getTimeInMillis();
-        Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1])).getTimeInMillis();
-        //Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
-        //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        //GregorianCalendar fromC = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]));
+        Date dateFrom = new Date(Integer.parseInt(array_from[2])-1900,Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]),0,0,0);
+        Long from = dateFrom.getTime();
+        from += 1000*3600;
+        Date dateTo = new Date(Integer.parseInt(array_to[2])-1900,Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0);
+        Long to = dateTo.getTime();
+        to += 1000*3600;
+        //Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0).getTimeInMillis();
         timeTable.setFrom(from);
         timeTable.setTo(to);
         timeTable.setRoomState(roomStateRepository.findOne(stateId));
@@ -145,7 +144,6 @@ public class TimeTableController {
         }else
             timeTable.setInventories(null);
         timeTableService.add(timeTable);
-        //timeTableService.add(new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,Integer.parseInt(tenantId)));
         return "redirect:/timetable/all";
     }
 
@@ -172,10 +170,14 @@ public class TimeTableController {
         String[] splitStr = daterange.split(" - ");
         String[] array_from = splitStr[0].split("/");
         String[] array_to = splitStr[1].split("/");
-        Long from = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1])).getTimeInMillis();
-        Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1])).getTimeInMillis();
-        //Long from = new GregorianCalendar(Integer.parseInt(splitStr[0].substring(6,10)),Integer.parseInt(splitStr[0].substring(0, 2))-1,Integer.parseInt(splitStr[0].substring(3,5))).getTimeInMillis();
-        //Long to = new GregorianCalendar(Integer.parseInt(splitStr[1].substring(6, 10)),Integer.parseInt(splitStr[1].substring(0, 2))-1,Integer.parseInt(splitStr[1].substring(3, 5))).getTimeInMillis();
+        Date dateFrom = new Date(Integer.parseInt(array_from[2])-1900,Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]),0,0,0);
+        Long from = dateFrom.getTime();
+        from += 1000*3600;
+        Date dateTo = new Date(Integer.parseInt(array_to[2])-1900,Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0);
+        Long to = dateTo.getTime();
+        to += 1000*3600;
+//        Long from = new GregorianCalendar(Integer.parseInt(array_from[2]),Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]),0,0,0).getTimeInMillis();
+//        Long to = new GregorianCalendar(Integer.parseInt(array_to[2]),Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0).getTimeInMillis();
         TimeTable tt = new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,tenantId);
         tt.setGuest(guestService.add(new Guest(fio, phone, email, tenantId)));
         Arrays.sort(inventory);

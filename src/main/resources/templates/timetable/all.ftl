@@ -173,6 +173,8 @@
             var ourtr = document.getElementById(elem.room.id);
             var array = ourtr.children;
             var value;
+            leftIndex = Math.round(leftIndex);
+            rightIndex = Math.round(rightIndex);
             if (elem.state=="Занято")
                 value="busy";
             if (elem.state=="Оплачено")
@@ -180,7 +182,7 @@
             if (elem.state=="Бронь")
                 value="booked";
             for (var j = leftIndex; j<rightIndex; j++){
-                $(array[Math.round(j)+1]).attr("name", value);
+                $(array[j+1]).attr("name", value);
             }
         }
     };
