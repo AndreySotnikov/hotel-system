@@ -41,7 +41,7 @@ public class MainConfig extends WebMvcConfigurerAdapter {
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 //        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//        driverManagerDataSource.setUrl("jdbc:mysql://localhost/pmsaccounts");
+//        driverManagerDataSource.setUrl("jdbc:mysql://localhost/hotelsystem");
 //        driverManagerDataSource.setUsername("root");
 //        driverManagerDataSource.setPassword("123456789");
 

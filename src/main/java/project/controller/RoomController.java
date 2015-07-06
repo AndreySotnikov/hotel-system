@@ -182,16 +182,22 @@ public class RoomController {
                 image.setTenantId(tenantId);
                 //image = imageDao.create(image);
 
-                Integer maxId = imageService.maxId();
-
-                image.setUrl("/room/picture/"+(maxId+1));
-                image.setThumbnailUrl("/room/thumbnail/"+(maxId+1));
-                image.setDeleteUrl("/room/delete/"+(maxId+1));
+                image = imageService.add(image);
+                int id = image.getImageId();
+                image.setUrl("/room/picture/"+(id));
+                image.setThumbnailUrl("/room/thumbnail/"+(id));
+                image.setDeleteUrl("/room/delete/"+(id));
                 image.setDeleteType("DELETE");
-
-                imageService.add(image);
+                imageService.update(id,image);
 
                 list.add(image);
+                //Integer maxId = imageService.maxId();
+//                image.setUrl("/room/picture/"+(maxId+1));
+//                image.setThumbnailUrl("/room/thumbnail/"+(maxId+1));
+//                image.setDeleteUrl("/room/delete/"+(maxId+1));
+//                image.setDeleteType("DELETE");
+
+                //imageService.add(image);
 
             } catch(IOException e) {
                 //log.error("Could not upload file "+mpf.getOriginalFilename(), e);

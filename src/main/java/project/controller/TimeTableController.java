@@ -125,10 +125,10 @@ public class TimeTableController {
         String[] array_to = splitStr[1].split("/");
         Date dateFrom = new Date(Integer.parseInt(array_from[2])-1900,Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]),0,0,0);
         Long from = dateFrom.getTime();
-        from += 1000*3600;
+//        from += 1000*3600;
         Date dateTo = new Date(Integer.parseInt(array_to[2])-1900,Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0);
         Long to = dateTo.getTime();
-        to += 1000*3600;
+//        to += 1000*3600;
         timeTable.setFrom(from);
         timeTable.setTo(to);
         timeTable.setRoomState(roomStateRepository.findOne(stateId));
@@ -170,10 +170,10 @@ public class TimeTableController {
         String[] array_to = splitStr[1].split("/");
         Date dateFrom = new Date(Integer.parseInt(array_from[2])-1900,Integer.parseInt(array_from[0])-1,Integer.parseInt(array_from[1]),0,0,0);
         Long from = dateFrom.getTime();
-        from += 1000*3600;
+//        from += 1000*3600;
         Date dateTo = new Date(Integer.parseInt(array_to[2])-1900,Integer.parseInt(array_to[0])-1,Integer.parseInt(array_to[1]),0,0,0);
         Long to = dateTo.getTime();
-        to += 1000*3600;
+//        to += 1000*3600;
         TimeTable tt = new TimeTable(roomService.getOne(id),roomStateRepository.findOne(stateId),from,to,tenantId);
         tt.setGuest(guestService.add(new Guest(fio, phone, email, tenantId)));
         Arrays.sort(inventory);

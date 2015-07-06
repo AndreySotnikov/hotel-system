@@ -221,10 +221,10 @@
         var dt = value.split(' - ');
         var from = dt[0].split('/');
         var date = new Date(0, 0);
-        date.setFullYear(parseInt(from[2]),parseInt(from[0]-1),parseInt(from[1]));
+        date.setFullYear(parseInt(from[2]+1),parseInt(from[0]-1),parseInt(from[1]));
         oldfrom = date.getTime();
         var to = dt[1].split('/');
-        date.setFullYear(parseInt(to[2]),parseInt(to[0]-1),parseInt(to[1]));
+        date.setFullYear(parseInt(to[2]+1),parseInt(to[0]-1),parseInt(to[1]));
         oldto = date.getTime();
     }
 
